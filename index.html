@@ -889,6 +889,9 @@ body.dark .photo-tip { background: #3a1c28; color: #f06292; }
 </head>
 <body>
 
+<!-- Install App Button -->
+<button class="dark-toggle" id="installBtn" onclick="installApp()" title="安装App" style="top:54px;font-size:14px;width:auto;border-radius:18px;padding:6px 14px;font-size:12px;display:none;">📲 安装App</button>
+
 <!-- Dark Mode Toggle -->
 <button class="dark-toggle" id="darkToggle" onclick="toggleDarkMode()" title="切换暗色模式">🌙</button>
 
@@ -2423,12 +2426,15 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// ===== CHROME INSTALL PROMPT =====
+// ===== CHROME/EDGE INSTALL PROMPT =====
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  // Show a custom install button
+  // Show install button in top bar
+  const btn = document.getElementById('installBtn');
+  if (btn) { btn.style.display = 'block'; btn.textContent = '📲 一键安装App'; }
+  // Also show in banner
   const banner = document.getElementById('pwaBanner');
   if (banner) {
     banner.innerHTML = `
@@ -2440,17 +2446,36 @@ window.addEventListener('beforeinstallprompt', (e) => {
   }
 });
 
+// Show install button even without beforeinstallprompt (Edge fallback)
+setTimeout(() => {
+  const isStandalone = navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+  if (!isStandalone && !deferredPrompt) {
+    const btn = document.getElementById('installBtn');
+    if (btn) {
+      btn.style.display = 'block';
+      btn.textContent = '📲 添加到桌面';
+      btn.onclick = function() {
+        showToast('📱 请点浏览器右上角菜单 → 「添加到手机」或「添加到主屏幕」');
+      };
+    }
+  }
+}, 5000);
+
 function installApp() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(result => {
       if (result.outcome === 'accepted') {
         showToast('✅ 安装成功！桌面找到「长白山攻略」图标');
+        document.getElementById('installBtn').style.display = 'none';
       }
       deferredPrompt = null;
       const banner = document.getElementById('pwaBanner');
       if (banner) banner.remove();
     });
+  } else {
+    // Manual fallback
+    showToast('📱 请点浏览器菜单 → 「添加到手机」或「添加到主屏幕」');
   }
 }
 
