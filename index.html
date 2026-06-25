@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>长白山旅游攻略 · 3天2晚情侣游</title>
+<title>长白山攻略 · 3天2晚</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="长白山攻略">
+<meta name="theme-color" content="#2d5a4b">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🏔️</text></svg>">
+<link rel="manifest" href="./manifest.json">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
 :root {
   --primary: #2d5a4b;
@@ -755,9 +763,137 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
   .quick-stats { justify-content: center; }
   .ach-grid { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* ===== MAP ===== */
+.map-section { padding: 0 16px; }
+.map-container {
+  width: 100%; height: 420px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 1;
+}
+.map-container .leaflet-control-zoom { display: none; }
+.map-locate-btn {
+  position: absolute; top: 10px; right: 10px; z-index: 1000;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #fff; border: none; font-size: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.map-dest-btns {
+  display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 0;
+}
+.map-dest-btn {
+  font-size: 11px; padding: 6px 12px;
+  border-radius: 15px; border: 1px solid var(--border);
+  background: var(--card); cursor: pointer;
+  font-family: inherit; white-space: nowrap;
+  transition: all var(--transition);
+}
+.map-dest-btn:active, .map-dest-btn.active {
+  background: var(--primary); color: #fff; border-color: var(--primary);
+}
+.map-route-info {
+  font-size: 12px; color: var(--text-light); padding: 6px 0; text-align: center;
+}
+.itinerary-nav-btn {
+  display: inline-block; font-size: 10px;
+  padding: 2px 8px; border-radius: 10px;
+  background: #e4eef8; color: #2d6a9b;
+  cursor: pointer; margin-left: 6px;
+  border: none; font-family: inherit;
+  transition: all var(--transition);
+}
+.itinerary-nav-btn:active { background: #c8ddf0; }
+.didi-btn {
+  display: inline-block; font-size: 10px;
+  padding: 2px 8px; border-radius: 10px;
+  background: #fff0e6; color: #e8681c;
+  cursor: pointer; margin-left: 4px;
+  border: none; font-family: inherit;
+  transition: all var(--transition);
+}
+.didi-btn:active { background: #ffe0cc; }
+
+/* ===== DARK MODE ===== */
+body.dark {
+  --bg: #1a1d1c;
+  --card: #252928;
+  --text: #e0e0e0;
+  --text-light: #a0a0a0;
+  --border: #333836;
+  --shadow: 0 2px 16px rgba(0,0,0,0.2);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.3);
+}
+body.dark .hero { background: linear-gradient(160deg, #0d1f17 0%, #1a3325 30%, #224d3a 60%, #2d5a4b 100%); }
+body.dark .weather-now { background: linear-gradient(135deg, #1e2a23, #1a2520); }
+body.dark .wf-day { background: #1e2420; }
+body.dark .wf-day.today { background: #1e2a23; border-color: #3a5c47; }
+body.dark .wizard-steps { background: #1e2420; }
+body.dark .budget-row.total { background: #1e2a23; }
+body.dark .tl-note { background: #1e2420; }
+body.dark .check-item.checked { background: #1a2520; }
+body.dark .weather-alert { background: linear-gradient(135deg, #332e1a, #2e2a18); border-color: #8a7520; color: #c9a93b; }
+body.dark .weather-note { background: #2a2618; border-left-color: #c9a93b; }
+body.dark .ticket-link.priority { background: linear-gradient(135deg, #2a2618, #252218); }
+body.dark .plan-tab { background: #252928; }
+body.dark .ach-card.unlocked { background: #262a20; }
+body.dark .bottom-nav { background: #1d201e; }
+body.dark .fab-menu-item .fmi-label { background: rgba(255,255,255,0.15); }
+body.dark .fab-menu-item .fmi-btn { background: #333; }
+body.dark .modal-box { background: #252928; }
+body.dark .list-item .item-emoji { background: #1e2420; }
+body.dark input[type=range] { accent-color: #5a9e7c; }
+body.dark .budget-row input[type=range] { accent-color: #5a9e7c; }
+.dark-toggle {
+  position: fixed; top: 12px; right: 12px; z-index: 300;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  color: #fff; font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  transition: all var(--transition);
+}
+.dark-toggle:active { transform: scale(0.9); }
+body.dark .dark-toggle { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+
+/* ===== PHOTO GUIDE ===== */
+.photo-tip {
+  display: inline-block; font-size: 10px;
+  padding: 2px 8px; border-radius: 10px;
+  background: #fce4ec; color: #c2185b;
+  cursor: pointer; margin-left: 4px;
+  border: none; font-family: inherit;
+  transition: all var(--transition);
+}
+.photo-tip:active { background: #f8bbd0; }
+body.dark .photo-tip { background: #3a1c28; color: #f06292; }
+
+/* ===== REMINDER BADGE ===== */
+.reminder-badge {
+  position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+  background: #333; color: #fff; padding: 10px 20px; border-radius: 22px;
+  font-size: 13px; z-index: 350; pointer-events: none;
+  opacity: 0; transition: opacity 0.5s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  max-width: 90vw; text-align: center;
+}
+.reminder-badge.show { opacity: 1; }
+
+/* Phone link */
+.phone-link { color: var(--info); text-decoration: none; font-weight: 500; }
+.phone-link:active { text-decoration: underline; }
 </style>
 </head>
 <body>
+
+<!-- Dark Mode Toggle -->
+<button class="dark-toggle" id="darkToggle" onclick="toggleDarkMode()" title="切换暗色模式">🌙</button>
+
+<!-- Smart Reminder -->
+<div class="reminder-badge" id="reminderBadge"></div>
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
@@ -787,6 +923,14 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
   <div class="weather-note">
     💡 <strong>天气解读：</strong>山脚气温与山顶天池温差可达15-20°C。山顶风速>8级（17m/s）时天池大概率关闭。降雨概率>60%建议启动备选方案。
   </div>
+  <div style="margin-top:10px;padding:12px 14px;background:linear-gradient(135deg,#f0f7f3,#e6f2eb);border-radius:10px;display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="checkTianchiStatus()">
+    <span style="font-size:28px;">📡</span>
+    <div style="flex:1;">
+      <div style="font-weight:700;font-size:14px;color:var(--primary);">🔍 天池开放状态 · 一键查询</div>
+      <div style="font-size:11px;color:var(--text-light);">点击跳转「长白山」官方公众号查看实时开放公告</div>
+    </div>
+    <span style="font-size:20px;color:var(--primary);">›</span>
+  </div>
 </div>
 
 <!-- ===== QUICK STATS ===== -->
@@ -798,8 +942,13 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
   </div>
   <div class="stat-card" onclick="scrollToSection('sec-tickets')">
     <div class="stat-icon">🎫</div>
-    <div class="stat-val">¥305/人</div>
-    <div class="stat-label">门票+车票</div>
+    <div class="stat-val">已购✔️</div>
+    <div class="stat-label">全价组合票</div>
+  </div>
+  <div class="stat-card" onclick="scrollToSection('sec-tickets')">
+    <div class="stat-icon">📍</div>
+    <div class="stat-val">池北区</div>
+    <div class="stat-label">交通集散中心</div>
   </div>
   <div class="stat-card" onclick="scrollToSection('sec-roulette')">
     <div class="stat-icon">🎲</div>
@@ -814,11 +963,13 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
 </div>
 
 <!-- ===== TRAIN INFO ===== -->
-<div class="train-info">
+<div class="train-info" style="position:relative;">
   <span class="train-icon">🚄</span>
   <div class="train-detail">
-    <div class="train-route">G3555 · 沈阳北 → 长白山站</div>
-    <div class="train-meta">6月26日（周五）19:01 → 21:04 · 约2小时3分</div>
+    <div class="train-route">去程 G3555 · 沈阳北 → 长白山站 <span class="tag tag-green">已购</span></div>
+    <div class="train-meta">6/26（周五）19:01 → 21:04 · 约2小时3分</div>
+    <div class="train-route" style="margin-top:6px;">返程 G142 · 长白山站 → 沈阳北 <span class="tag tag-green">已购</span></div>
+    <div class="train-meta">6/28（周日）17:47 → 19:48 · 约2小时1分</div>
   </div>
 </div>
 
@@ -861,27 +1012,35 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
 </div>
 
 <div class="ticket-links">
-  <a href="https://m.ctrip.com/webapp/ticket/detail/46326.html" target="_blank" class="ticket-link priority">
-    <span class="tl-icon">🎫</span>
+  <div class="ticket-link priority" style="border-left: 3px solid var(--success);">
+    <span class="tl-icon">✅</span>
     <span class="tl-info">
-      <span class="tl-name">长白山北坡门票预约</span>
-      <span class="tl-desc">携程官方 · 大门票+环保车+倒站车 ¥305</span>
+      <span class="tl-name">门票已购买！北景区全价组合票</span>
+      <span class="tl-desc">含大门票+环保车+天池主峰倒站车 · 「长白山旅游集团」小程序购买</span>
     </span>
-    <span class="tl-arrow">›</span>
-  </a>
-  <a href="https://mp.weixin.qq.com/" target="_blank" class="ticket-link" onclick="showToast('请在微信搜索「长白山旅游集团」小程序购票'); return false;">
-    <span class="tl-icon">📱</span>
+    <span class="tl-arrow">✔️</span>
+  </div>
+  <div class="ticket-link" style="border-left: 3px solid var(--info);">
+    <span class="tl-icon">📍</span>
     <span class="tl-info">
-      <span class="tl-name">微信小程序购票（推荐）</span>
-      <span class="tl-desc">搜索「长白山旅游集团」→ 北景区门票 → 提前1-15天购买</span>
+      <span class="tl-name">出发地点：池北区交通集散中心</span>
+      <span class="tl-desc">⏰ 入园时段：10:30 - 11:00 · 刷身份证进入</span>
     </span>
-    <span class="tl-arrow">›</span>
-  </a>
+    <span class="tl-arrow">📋</span>
+  </div>
   <a href="https://www.12306.cn/" target="_blank" class="ticket-link">
     <span class="tl-icon">🚄</span>
     <span class="tl-info">
       <span class="tl-name">12306 返程高铁票</span>
       <span class="tl-desc">长白山站 → 沈阳北站 · 建议买6/28下午3-6点车次</span>
+    </span>
+    <span class="tl-arrow">›</span>
+  </a>
+  <a href="javascript:void(0)" class="ticket-link" onclick="callDidi('池北区交通集散中心',42.418,128.105)" style="border-left: 3px solid #ff7d38;">
+    <span class="tl-icon">🚕</span>
+    <span class="tl-info">
+      <span class="tl-name">滴滴打车 · 去集散中心</span>
+      <span class="tl-desc">一键唤起滴滴App · 自动填入目的地</span>
     </span>
     <span class="tl-arrow">›</span>
   </a>
@@ -919,91 +1078,99 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
         </div>
         <div class="timeline-item">
           <div class="tl-time">21:04</div>
-          <div class="tl-content">📍 抵达长白山站（二道白河镇）</div>
+          <div class="tl-content">📍 抵达长白山站（二道白河镇） <button class="didi-btn" onclick="callDidi('天添Loft民宿',42.421,128.107)">🚕 打车去民宿</button></div>
           <div class="tl-note">🚕 出站打车到镇上酒店约10分钟，拼车约¥20/人</div>
         </div>
         <div class="timeline-item">
           <div class="tl-time">21:30</div>
-          <div class="tl-content">🏨 入住酒店，放行李</div>
+          <div class="tl-content">🏨 入住<strong>天添·Loft民宿</strong>，放行李 <button class="itinerary-nav-btn" onclick="navFromItinerary('hotel')">🗺️ 导航</button> <button class="didi-btn" onclick="callDidi('天添Loft民宿',42.421,128.107)">🚕 打车</button></div>
           <div class="tl-note">💡 提前联系酒店确认接站服务，很多酒店免费接送</div>
         </div>
         <div class="timeline-item">
           <div class="tl-time">22:00</div>
-          <div class="tl-content">🍜 二道白河镇上吃个夜宵</div>
+          <div class="tl-content">🍜 二道白河镇上吃个夜宵 <button class="itinerary-nav-btn" onclick="navFromItinerary('foodstreet')">🗺️ 导航</button></div>
           <div class="tl-note">🔥 推荐：星辰岩石烧烤或小黄牛汤饭馆（开到晚11点）</div>
         </div>
         <div class="timeline-item">
           <div class="tl-time">23:00</div>
-          <div class="tl-content">😴 早点休息，明天早起上山！</div>
+          <div class="tl-content">😴 不用太早睡！明天10:30才入园，可以睡到8点</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="day-card day2" id="day2">
+  <div class="day-card day2 open" id="day2">
     <div class="day-header" onclick="toggleDay('day2')">
       <div class="day-num">D2</div>
       <div class="day-info">
         <div class="day-title">北坡景区全天 · 天池冲顶 <span class="tag tag-red">核心日</span></div>
-        <div class="day-date">6月27日（周六）全天</div>
+        <div class="day-date">6月27日（周六）· 10:30入园 · 池北区交通集散中心出发</div>
       </div>
       <span class="day-arrow">▼</span>
     </div>
     <div class="day-body">
       <div class="timeline">
         <div class="timeline-item">
-          <div class="tl-time">06:30</div>
-          <div class="tl-content">⏰ 起床！查看「长白山」公众号确认天池是否开放</div>
-          <div class="tl-note">📱 如天池关闭 → 使用上方「决策向导」切换方案</div>
+          <div class="tl-time">08:00-08:30</div>
+          <div class="tl-content">🌅 自然醒！不用赶早，比原计划多睡2小时</div>
+          <div class="tl-note">📱 醒来看「长白山」公众号确认天池开放状态</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">07:00</div>
-          <div class="tl-content">🍳 酒店早餐或镇上早市（二道白河早市有打糕、冻梨）</div>
+          <div class="tl-time">08:30-09:30</div>
+          <div class="tl-content">🍳 悠闲早餐：二道白河早市逛吃</div>
+          <div class="tl-note">🔥 推荐：打糕、冻梨、蓝莓干、现磨豆浆。早市在恩都里商业区附近</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">07:30</div>
-          <div class="tl-content">🚌 到北景区集散中心，刷身份证入园</div>
-          <div class="tl-note">⚠️ 旺季排队人多，尽量7:30前到！</div>
+          <div class="tl-time">09:30-10:00</div>
+          <div class="tl-content">🎒 回酒店取装备，确认带齐：身份证、雨衣、保温杯、防晒</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">08:00-09:00</div>
-          <div class="tl-content">🚌 环保车 → 换倒站车 → 直奔天池主峰！</div>
-          <div class="tl-note">🔥 入园后第一站必须天池！上午云雾最少，能见度最高</div>
+          <div class="tl-time">10:00-10:15</div>
+          <div class="tl-content">🚕 前往<strong>池北区交通集散中心</strong> <button class="itinerary-nav-btn" onclick="navFromItinerary('jisanzhongxin')">🗺️ 导航</button> <button class="didi-btn" onclick="callDidi('池北区交通集散中心',42.418,128.105)">🚕 打车</button></div>
+          <div class="tl-note">💡 镇上打车约10分钟，让酒店接送或滴滴。10:15前务必到达！</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">09:00-10:30</div>
-          <div class="tl-content">🏔️ <strong>天池观景</strong> · A线陡峭/B线平缓，不走回头路</div>
-          <div class="tl-note">📸 拍照点：天池碑石、山顶全景台。海拔2189米，注意高反</div>
+          <div class="tl-time">10:30-11:00</div>
+          <div class="tl-content">🎫 刷身份证入园 → 环保车 → 换倒站车</div>
+          <div class="tl-note">🔥 入园后<strong>直奔天池主峰</strong>！不要先去其他景点。虽然10:30比理想时间晚，但天池随时可能因天气关闭，必须先冲！</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">10:30-11:30</div>
-          <div class="tl-content">🌊 长白瀑布 · 步行栈道20分钟，落差68米</div>
+          <div class="tl-time">11:00-12:30</div>
+          <div class="tl-content">🏔️ <strong>天池观景</strong> · A线陡峭视野好 / B线平缓轻松 · 不走回头路 <button class="itinerary-nav-btn" onclick="navFromItinerary('tianchi')">🗺️ 导航</button></div>
+          <div class="tl-note">📸 中午光线强但拍照也好看。海拔2189米，慢慢走别跑。💡 10:30入园的好处：早班大军已下山，天池观景台人少一些！</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">11:30-12:30</div>
-          <div class="tl-content">♨️ 聚龙温泉群 + 午餐（温泉蛋 10元/3个，必吃！）</div>
-          <div class="tl-note">🥚 蛋白嫩滑蛋黄流心，长白山独有体验</div>
+          <div class="tl-time">12:30-13:10</div>
+          <div class="tl-content">🌊 长白瀑布 · 步行栈道20分钟 <button class="itinerary-nav-btn" onclick="navFromItinerary('pubu')">🗺️ 导航</button></div>
+          <div class="tl-note">落差68米，天池唯一出水口</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">12:30-13:30</div>
-          <div class="tl-content">💚 绿渊潭 · 潭水碧绿如翡翠，拍照绝美</div>
+          <div class="tl-time">13:10-13:40</div>
+          <div class="tl-content">♨️ 聚龙温泉群 + 午餐 <button class="itinerary-nav-btn" onclick="navFromItinerary('wenquan')">🗺️ 导航</button></div>
+          <div class="tl-note">🥚 温泉蛋 10元/3个 必吃！蛋白豆花般嫩滑。玉米、烤肠也有卖</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">13:30-15:00</div>
-          <div class="tl-content">🌲 地下森林 · 木栈道徒步30分钟，天然氧吧</div>
+          <div class="tl-time">13:40-14:10</div>
+          <div class="tl-content">💚 绿渊潭 · 潭水碧绿如翡翠，拍照仙境 <button class="itinerary-nav-btn" onclick="navFromItinerary('lvyuantan')">🗺️ 导航</button></div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">15:00-16:00</div>
+          <div class="tl-time">14:10-15:30</div>
+          <div class="tl-content">🌲 地下森林 · 木栈道徒步，天然氧吧 <button class="itinerary-nav-btn" onclick="navFromItinerary('senlin')">🗺️ 导航</button></div>
+          <div class="tl-note">⏱️ 全程约80分钟，如果累了走一半折返也行。负氧离子爆表！</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">15:30-16:30</div>
           <div class="tl-content">🚌 乘车下山，返回二道白河镇</div>
+          <div class="tl-note">📌 景区17:00关门，确保15:30前从地下森林往出口走</div>
         </div>
         <div class="timeline-item">
           <div class="tl-time">17:30</div>
           <div class="tl-content">🍖 晚餐：福记东北人家铁锅炖（有二人转表演）</div>
-          <div class="tl-note">🔥 必点：铁锅炖大鹅/排骨锅，贴玉米饼子</div>
+          <div class="tl-note">🔥 必点：铁锅炖大鹅/排骨锅，贴玉米饼子。提前打电话订位！</div>
         </div>
         <div class="timeline-item">
           <div class="tl-time">20:00</div>
-          <div class="tl-content">♨️ 泡温泉（如住温泉酒店）或镇上逛逛夜市</div>
+          <div class="tl-content">🌙 二道白河镇散步 · 美人松公园夜景或回酒店休息</div>
         </div>
       </div>
     </div>
@@ -1013,41 +1180,50 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
     <div class="day-header" onclick="toggleDay('day3')">
       <div class="day-num">D3</div>
       <div class="day-info">
-        <div class="day-title">休闲体验 · 返程</div>
-        <div class="day-date">6月28日（周日）· 下午/晚上返程</div>
+        <div class="day-title">二道白河休闲 · 返程 <span class="tag tag-blue">G142</span></div>
+        <div class="day-date">6月28日（周日）· 🚄 G142 长白山站 17:47 → 沈阳北 19:48</div>
       </div>
       <span class="day-arrow">▼</span>
     </div>
     <div class="day-body">
       <div class="timeline">
         <div class="timeline-item">
-          <div class="tl-time">08:00</div>
-          <div class="tl-content">🌅 自然醒！享受悠闲早晨</div>
+          <div class="tl-time">08:00-09:00</div>
+          <div class="tl-content">🌅 自然醒！收拾行李，12:00前退房</div>
+          <div class="tl-note">💡 行李可以寄存在民宿前台，下午回来取</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">09:00</div>
-          <div class="tl-content">🍳 早午餐：服务大楼冷面 或 金顺朝鲜族汤饭馆</div>
-          <div class="tl-note">🥟 推荐参鸡汤（88元/只）、朝鲜族冷面（25元/碗）</div>
+          <div class="tl-time">09:00-10:00</div>
+          <div class="tl-content">🍳 早午餐：金顺朝鲜族汤饭馆（参鸡汤88元/只）或服务大楼冷面（25元/碗）</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">10:00-12:00</div>
-          <div class="tl-content">🏞️ <strong>方案A：</strong>如果昨天没看到天池 → 再冲一次！<br>
-          <strong>方案B：</strong>看到了天池 → 二道白河镇休闲游（美人松公园、秋沙鸭公园）<br>
-          <strong>方案C：</strong>包车去西坡或南坡（车程约2小时）</div>
+          <div class="tl-time">10:00-11:30</div>
+          <div class="tl-content">🏞️ <strong>方案A：</strong>昨天没看到天池 → 再冲一次！<br><strong>方案B：</strong>看到了天池 → 美人松公园+秋沙鸭公园散步拍照</div>
+          <div class="tl-note">📸 美人松公园有"长白山第一松"，树龄400年+，拍照必去</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">12:00-13:00</div>
-          <div class="tl-content">🍽️ 午餐：味特鲜鱼馆（35年老店，冷水鱼一鱼三吃）</div>
+          <div class="tl-time">11:30-12:30</div>
+          <div class="tl-content">🛍️ 恩都里商业区买特产：蓝莓干、打糕、人参制品</div>
+          <div class="tl-note">⚠️ 景区外正规店买！出租车推荐的千万别信！</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">13:00-15:00</div>
-          <div class="tl-content">🛍️ 买特产伴手礼（蓝莓干、打糕、人参制品）</div>
-          <div class="tl-note">⚠️ 景区外正规店买，别在景区内买！出租车推荐的也别信！</div>
+          <div class="tl-time">12:30-13:30</div>
+          <div class="tl-content">🍽️ 午餐：味特鲜鱼馆（35年老店 · 冷水鱼一鱼三吃）</div>
         </div>
         <div class="timeline-item">
-          <div class="tl-time">下午/傍晚</div>
-          <div class="tl-content">🚄 前往长白山站，乘高铁返回沈阳</div>
-          <div class="tl-note">💡 提前在12306买好返程票，建议买下午3-6点的车次</div>
+          <div class="tl-time">13:30-16:00</div>
+          <div class="tl-content">☕ 找个咖啡馆发呆 / 二道白河河边散步 / 回民宿取行李</div>
+          <div class="tl-note">💡 推荐去「向野拾間」民宿旁的咖啡馆，窗外就是长白山</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">16:30</div>
+          <div class="tl-content">🚕 出发去长白山站 <button class="didi-btn" onclick="callDidi('长白山高铁站',42.395,128.110)">🚕 打车去车站</button></div>
+          <div class="tl-note">⏰ 预留充足时间：镇上到高铁站10分钟，提前20分钟到站</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">17:47</div>
+          <div class="tl-content">🚄 <strong>G142次</strong> 长白山站出发 → 19:48 抵达沈阳北</div>
+          <div class="tl-note">🏠 晚上8点前到家！收拾收拾第二天上班~</div>
         </div>
       </div>
     </div>
@@ -1087,6 +1263,140 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
   </div>
 </div>
 
+<!-- ===== SECTION: SCENIC ROUTE ===== -->
+<div class="section-title" id="sec-route">
+  <span class="title-icon">🗺️</span> 景区内部游览路线
+  <span class="title-badge">不迷路</span>
+</div>
+
+<div style="padding:0 16px;">
+  <div style="background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);overflow-x:auto;">
+    <div style="display:flex;align-items:flex-start;gap:0;min-width:700px;font-size:11px;">
+      <!-- Step 1 -->
+      <div style="text-align:center;flex-shrink:0;width:80px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#e8a850;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:20px;">📍</div>
+        <div style="font-weight:700;margin-top:4px;">集散中心</div>
+        <div style="color:var(--text-light);">刷身份证入园</div>
+      </div>
+      <div style="flex-shrink:0;padding-top:18px;color:var(--accent);font-weight:600;">🚌→</div>
+      <!-- Step 2 -->
+      <div style="text-align:center;flex-shrink:0;width:80px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#c9b99a;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:20px;">🔄</div>
+        <div style="font-weight:700;margin-top:4px;">换乘中心</div>
+        <div style="color:var(--text-light);">环保车约40分钟</div>
+      </div>
+      <div style="flex-shrink:0;padding-top:18px;color:#d94a4a;font-weight:600;">🚙倒站→</div>
+      <!-- Step 3: Tianchi -->
+      <div style="text-align:center;flex-shrink:0;width:80px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#3a7d64;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:20px;">🏔️</div>
+        <div style="font-weight:700;margin-top:4px;">天池主峰</div>
+        <div style="color:var(--text-light);">倒站车20分钟</div>
+      </div>
+      <div style="flex-shrink:0;padding-top:18px;color:#d94a4a;font-weight:600;">🚙倒站←</div>
+      <!-- Step 4 -->
+      <div style="text-align:center;flex-shrink:0;width:80px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#c9b99a;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:20px;">🔄</div>
+        <div style="font-weight:700;margin-top:4px;">返回换乘中心</div>
+        <div style="color:var(--text-light);">倒站车下山</div>
+      </div>
+      <div style="flex-shrink:0;padding-top:18px;color:var(--accent);font-weight:600;">🚌→</div>
+      <!-- Step 5 -->
+      <div style="text-align:center;flex-shrink:0;width:80px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#2d5a4b;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:20px;">💧</div>
+        <div style="font-weight:700;margin-top:4px;">长白瀑布</div>
+        <div style="color:var(--text-light);">环保车一站</div>
+      </div>
+      <div style="flex-shrink:0;padding-top:18px;color:#777;font-weight:600;">🚶5分→</div>
+      <!-- Step 6 -->
+      <div style="text-align:center;flex-shrink:0;width:80px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#2d5a4b;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:20px;">♨️</div>
+        <div style="font-weight:700;margin-top:4px;">聚龙温泉群</div>
+        <div style="color:var(--text-light);">紧邻瀑布</div>
+      </div>
+      <div style="flex-shrink:0;padding-top:18px;color:var(--accent);font-weight:600;">🚌→</div>
+      <!-- Step 7 -->
+      <div style="text-align:center;flex-shrink:0;width:80px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#2d5a4b;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:20px;">💚</div>
+        <div style="font-weight:700;margin-top:4px;">绿渊潭</div>
+        <div style="color:var(--text-light);">环保车一站</div>
+      </div>
+      <div style="flex-shrink:0;padding-top:18px;color:var(--accent);font-weight:600;">🚌→</div>
+      <!-- Step 8 -->
+      <div style="text-align:center;flex-shrink:0;width:80px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#2d5a4b;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:20px;">🌲</div>
+        <div style="font-weight:700;margin-top:4px;">地下森林</div>
+        <div style="color:var(--text-light);">环保车一站</div>
+      </div>
+      <div style="flex-shrink:0;padding-top:18px;color:var(--accent);font-weight:600;">🚌→</div>
+      <!-- Step 9 -->
+      <div style="text-align:center;flex-shrink:0;width:80px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#e8a850;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:20px;">🚪</div>
+        <div style="font-weight:700;margin-top:4px;">出口</div>
+        <div style="color:var(--text-light);">约16:00前离开</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+    <span style="font-size:11px;padding:4px 10px;border-radius:12px;background:#fef3e4;color:#c2781a;">🚌 环保车 = 景区大巴（已包含在门票里）</span>
+    <span style="font-size:11px;padding:4px 10px;border-radius:12px;background:#fde8e8;color:#b91c1c;">🚙 倒站车 = 上天池专用小巴（已包含在全价票里）</span>
+    <span style="font-size:11px;padding:4px 10px;border-radius:12px;background:#f0f0f0;color:#555;">🚶 步行 = 栈道连接，跟着指示牌走</span>
+  </div>
+
+  <div style="margin-top:12px;padding:12px 14px;background:var(--card);border-radius:10px;box-shadow:var(--shadow);font-size:12px;line-height:1.8;">
+    <strong>⚠️ 关键规则</strong><br>
+    ① <strong>先去天池，再去其他景点</strong>——天池随时可能因天气关闭<br>
+    ② 每个景点之间坐<strong>环保车</strong>，站台等车，几分钟一班<br>
+    ③ 天池需要在上面的换乘中心单独坐<strong>倒站车</strong>（小巴），往返同路<br>
+    ④ 瀑布→温泉群是唯一<strong>步行</strong>路段，仅5分钟栈道<br>
+    ⑤ 所有车费已包含在全价组合票里，<strong>无需再买票</strong>
+  </div>
+</div>
+
+<!-- ===== SECTION: PHOTO GUIDE ===== -->
+<div class="section-title" id="sec-photo">
+  <span class="title-icon">📸</span> 拍照攻略
+  <span class="title-badge">出片必看</span>
+</div>
+
+<div class="list-section">
+  <div class="list-item">
+    <span class="item-emoji">🌊</span>
+    <div class="item-info">
+      <div class="item-name">天池 · 最佳机位</div>
+      <div class="item-dish">📍 天池碑石旁（经典打卡）· A线终点观景台（全景）<br>🕐 中午光线强但对比度高，蓝天+湖水效果震撼<br>📷 广角拍全景 → 人像模式站碑石旁 → 俯拍湖水特写<br>👗 亮色冲锋衣或白色衣服最出片，和蓝天碧水形成对比</div>
+    </div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">💧</span>
+    <div class="item-info">
+      <div class="item-name">长白瀑布 · 最佳机位</div>
+      <div class="item-dish">📍 栈道中间段仰拍瀑布 · 终点平台平拍<br>📷 慢门拍水流丝绸效果（手机用实况模式）<br>👗 站在栈道护栏旁侧身回头看镜头</div>
+    </div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">♨️</span>
+    <div class="item-info">
+      <div class="item-name">聚龙温泉群 · 最佳机位</div>
+      <div class="item-dish">📍 温泉蛋摊位旁（热气+人流=氛围感）<br>📷 俯拍彩色钙化池纹理 · 手拿温泉蛋特写<br>💡 蒸腾的热气做背景，拍出来自带仙气滤镜</div>
+    </div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">💚</span>
+    <div class="item-info">
+      <div class="item-name">绿渊潭 · 最佳机位</div>
+      <div class="item-dish">📍 潭边木栈道正对瀑布位置 · 侧面石阶<br>📷 人站潭边三分之一处，背景瀑布+碧绿潭水<br>👗 红色/黄色衣服和绿色潭水绝配！下雨天更仙</div>
+    </div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🌲</span>
+    <div class="item-info">
+      <div class="item-name">地下森林 · 最佳机位</div>
+      <div class="item-dish">📍 木栈道中段仰拍高树 · 终点峡谷观景台<br>📷 阳光透过树冠的光斑（丁达尔效应）· 纵深感构图<br>💡 穿行森林时抓拍背影，氛围感满分</div>
+    </div>
+  </div>
+</div>
+
 <!-- ===== SECTION: FOOD ===== -->
 <div class="section-title" id="sec-food">
   <span class="title-icon">🍜</span> 美食地图
@@ -1105,8 +1415,8 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
   <div class="list-item">
     <span class="item-emoji">🥩</span>
     <div class="item-info">
-      <div class="item-name">星辰岩石烧烤</div>
-      <div class="item-meta">📍 二道白河镇 · ⭐ 安图风味榜No.1</div>
+      <div class="item-name">星辰岩石烧烤 <a href="tel:13596593356" class="phone-link">📞</a></div>
+      <div class="item-meta">📍 二道白河镇 · ⭐ 安图风味榜No.1 · ☎️ 13596593356</div>
       <div class="item-dish">小肋排 · 五花肉炒酸菜 · 黄牛肉</div>
     </div>
     <div class="item-price">~¥90/人</div>
@@ -1114,8 +1424,8 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
   <div class="list-item">
     <span class="item-emoji">🍲</span>
     <div class="item-info">
-      <div class="item-name">福记东北人家铁锅炖</div>
-      <div class="item-meta">📍 二道白河镇 · 🎭 有二人转表演</div>
+      <div class="item-name">福记东北人家铁锅炖 <a href="tel:18643287799" class="phone-link">📞</a></div>
+      <div class="item-meta">📍 二道白河镇 · 🎭 有二人转表演 · ☎️ 18643287799</div>
       <div class="item-dish">铁锅炖大鹅 · 排骨锅 · 贴玉米饼子</div>
     </div>
     <div class="item-price">~¥104/人</div>
@@ -1132,8 +1442,8 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
   <div class="list-item">
     <span class="item-emoji">🐟</span>
     <div class="item-info">
-      <div class="item-name">味特鲜鱼馆</div>
-      <div class="item-meta">📍 二道白河镇 · 🕰️ 35年老店</div>
+      <div class="item-name">味特鲜鱼馆 <a href="tel:04335710806" class="phone-link">📞</a></div>
+      <div class="item-meta">📍 二道白河镇 · 🕰️ 35年老店 · ☎️ 0433-5710806</div>
       <div class="item-dish">冷水鱼一鱼三吃 · 林蛙炖土豆 · 柳根鱼</div>
     </div>
     <div class="item-price">~¥80/人</div>
@@ -1192,45 +1502,26 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
 
 <!-- ===== SECTION: STAY ===== -->
 <div class="section-title" id="sec-stay">
-  <span class="title-icon">🏨</span> 住宿推荐
+  <span class="title-icon">🏨</span> 住宿 · 已预订
 </div>
 
 <div class="list-section">
-  <div class="list-item" style="border-left: 3px solid #e8a850;">
-    <span class="item-emoji">♨️</span>
+  <div class="list-item" style="border-left: 3px solid var(--success); background: #f5faf7;">
+    <span class="item-emoji">✅</span>
     <div class="item-info">
-      <div class="item-name">花筑·岳璟汤泉民宿 <span class="tag tag-orange">情侣首选</span></div>
-      <div class="item-meta">📍 北坡集散中心附近 · ⭐ 4.7分 · 2025新开业</div>
-      <div class="item-dish">🔥 每间房有独立室外私汤池！24小时可泡，夜晚观星。木屋私汤大床房</div>
+      <div class="item-name">天添·Loft复式度假民宿 <span class="tag tag-green">已预订</span></div>
+      <div class="item-meta">📍 白河大街东侧滨河公寓二期102 · ⭐ 9.8分 · 601条好评</div>
+      <div class="item-dish">🏠 Loft两层空间 · 零压床垫 · 干湿分离 · 步行2分钟到美食街 · 免费高铁站+集散中心接送</div>
     </div>
-    <div class="item-price">~¥400-600</div>
+    <div class="item-price">¥250-400</div>
   </div>
-  <div class="list-item">
-    <span class="item-emoji">🏨</span>
-    <div class="item-info">
-      <div class="item-name">季枫国际温泉酒店</div>
-      <div class="item-meta">📍 火车站斜对面 · ⭐ 2024新开业 · 高档型</div>
-      <div class="item-dish">康养温泉 · 全智能化 · 可观长白山远景 · 免费接送站</div>
+  <div class="list-item" style="font-size:13px; display:block; padding:16px;">
+    <div style="display:flex;gap:24px;flex-wrap:wrap;">
+      <div>🚄 <strong>高铁站</strong><br><span style="font-size:11px;color:var(--text-light);">6km / 10分钟车程<br>老板免费接送</span></div>
+      <div>🏔️ <strong>集散中心</strong><br><span style="font-size:11px;color:var(--text-light);">步行几分钟<br>老板免费送</span></div>
+      <div>🍜 <strong>美食街</strong><br><span style="font-size:11px;color:var(--text-light);">步行2分钟<br>白山街主街</span></div>
+      <div>📞 <strong>电话</strong><br><span style="font-size:11px;color:var(--text-light);">15526736123</span></div>
     </div>
-    <div class="item-price">~¥300-500</div>
-  </div>
-  <div class="list-item">
-    <span class="item-emoji">🏠</span>
-    <div class="item-info">
-      <div class="item-name">煌庭国际温泉酒店</div>
-      <div class="item-meta">📍 近高铁站 · ⭐ 8.9分 · 四星级</div>
-      <div class="item-dish">室内温泉 · 部分房型带私汤 · 全屋智控 · 零压床垫</div>
-    </div>
-    <div class="item-price">~¥300-450</div>
-  </div>
-  <div class="list-item">
-    <span class="item-emoji">🏡</span>
-    <div class="item-info">
-      <div class="item-name">长白山田园宾馆</div>
-      <div class="item-meta">📍 集散中心步行100米 · 经济型</div>
-      <div class="item-dish">位置绝佳 · 附近有东沃温泉可单独泡 · 吃饭购物方便</div>
-    </div>
-    <div class="item-price">~¥150-250</div>
   </div>
 </div>
 
@@ -1248,10 +1539,10 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
   <div class="plan-content active" id="plan-a">
     <div class="plan-card">
       <strong>☀️ 最佳情况：天池正常开放</strong><br>
-      按照 Day2 行程正常进行，入园直奔天池！<br>
-      上午8-10点是黄金窗口，光线最好、云雾最少。<br>
-      下午依次游览瀑布→温泉→绿渊潭→地下森林。<br>
-      晚上铁锅炖庆祝 + 泡温泉放松 🎉
+      10:30 入园后<strong>直奔天池</strong>！虽然比清晨晚，但中午人少。<br>
+      然后依次：瀑布→温泉→绿渊潭→地下森林。<br>
+      6.5小时走完五大景点，时间刚好。<br>
+      晚上铁锅炖庆祝 🎉
     </div>
   </div>
   <div class="plan-content" id="plan-b">
@@ -1275,6 +1566,31 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
       • 如果下午2点还没开 → 按"全天关闭"方案执行<br>
       📌 住2晚的理由——多一次冲顶机会！
     </div>
+  </div>
+</div>
+
+<!-- ===== SECTION: PACKING CHECKLIST ===== -->
+<!-- ===== SECTION: MAP ===== -->
+<div class="section-title" id="sec-map">
+  <span class="title-icon">🗺️</span> 实时地图导航
+  <span class="title-badge">新功能</span>
+</div>
+
+<div class="map-section">
+  <div class="map-container" id="mapContainer">
+    <button class="map-locate-btn" onclick="locateMe()" title="定位我的位置">📍</button>
+  </div>
+  <div class="map-route-info" id="mapRouteInfo">👆 点击下方目的地查看路线</div>
+  <div class="map-dest-btns" id="mapDestBtns">
+    <button class="map-dest-btn" onclick="navigateTo('tianchi')">🏔️ 天池</button>
+    <button class="map-dest-btn" onclick="navigateTo('jisanzhongxin')">📍 集散中心</button>
+    <button class="map-dest-btn" onclick="navigateTo('hotel')">🏠 民宿</button>
+    <button class="map-dest-btn" onclick="navigateTo('station')">🚄 高铁站</button>
+    <button class="map-dest-btn" onclick="navigateTo('pubu')">🌊 长白瀑布</button>
+    <button class="map-dest-btn" onclick="navigateTo('wenquan')">♨️ 温泉群</button>
+    <button class="map-dest-btn" onclick="navigateTo('lvyuantan')">💚 绿渊潭</button>
+    <button class="map-dest-btn" onclick="navigateTo('senlin')">🌲 地下森林</button>
+    <button class="map-dest-btn" onclick="navigateTo('foodstreet')">🍜 美食街</button>
   </div>
 </div>
 
@@ -1311,13 +1627,13 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
 
 <div class="tips-list">
   <div class="tip-item"><span class="tip-num">1</span><div><strong>不查天气就去</strong> — 出发前晚关注「长白山发布」公众号，雨天/雾天关闭率80%+</div></div>
-  <div class="tip-item"><span class="tip-num">2</span><div><strong>下午才上山</strong> — 上午7-10点能见率高，下午易起雾天池"隐身"，务必早起！</div></div>
+  <div class="tip-item"><span class="tip-num">2</span><div><strong>入园后不直奔天池</strong> — 虽然你10:30才入园，但第一站必须天池！中午虽然云雾概率比清晨高，但天池随时可能关闭，先冲再说</div></div>
   <div class="tip-item"><span class="tip-num">3</span><div><strong>穿短袖上山</strong> — 山顶常年大风，6月仍有残雪！必带冲锋衣/薄羽绒服</div></div>
-  <div class="tip-item"><span class="tip-num">4</span><div><strong>不先上天池</strong> — 入园后必须直奔天池！天池可能随时因天气关闭</div></div>
+  <div class="tip-item"><span class="tip-num">4</span><div><strong>错过末班车</strong> — 景区17:00关门！15:30前必须从地下森林往出口走，预留1小时下山时间</div></div>
   <div class="tip-item"><span class="tip-num">5</span><div><strong>带雨伞上山</strong> — 山顶风大，雨伞秒变"降落伞"！只带一次性雨衣</div></div>
   <div class="tip-item"><span class="tip-num">6</span><div><strong>飞无人机</strong> — 长白山是边境禁区！罚款5000元起，切记别带！</div></div>
   <div class="tip-item"><span class="tip-num">7</span><div><strong>景区乱买特产</strong> — 人参、鹿茸去正规药店买。出租车推荐的千万别信！</div></div>
-  <div class="tip-item"><span class="tip-num">8</span><div><strong>不提前买票</strong> — 旺季当天基本买不到！提前1-15天在官方小程序购票</div></div>
+  <div class="tip-item"><span class="tip-num">8</span><div><strong>10:30入园太晚就摆烂</strong> — 6.5小时足够走完北坡五大景点！关键是节奏紧凑、不重复往返。按攻略顺序走刚刚好</div></div>
 </div>
 
 <!-- ===== FAB ===== -->
@@ -1345,10 +1661,10 @@ button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item,
 <nav class="bottom-nav">
   <button class="nav-item active" onclick="scrollToSection('sec-wizard', this)"><span class="nav-icon">🧭</span>向导</button>
   <button class="nav-item" onclick="scrollToSection('sec-itinerary', this)"><span class="nav-icon">📋</span>行程</button>
+  <button class="nav-item" onclick="scrollToSection('sec-map', this)"><span class="nav-icon">🗺️</span>地图</button>
+  <button class="nav-item" onclick="scrollToSection('sec-route', this)"><span class="nav-icon">🚏</span>路线</button>
   <button class="nav-item" onclick="scrollToSection('sec-food', this)"><span class="nav-icon">🍜</span>美食</button>
-  <button class="nav-item" onclick="scrollToSection('sec-stay', this)"><span class="nav-icon">🏨</span>住宿</button>
-  <button class="nav-item" onclick="scrollToSection('sec-packing', this)"><span class="nav-icon">🎒</span>清单</button>
-  <button class="nav-item" onclick="scrollToSection('sec-budget', this)"><span class="nav-icon">💰</span>预算</button>
+  <button class="nav-item" onclick="scrollToSection('sec-photo', this)"><span class="nav-icon">📸</span>拍照</button>
 </nav>
 
 <!-- ===== MODAL ===== -->
@@ -1528,15 +1844,15 @@ function wizardAnswer(step, answer) {
     if (answer === 'open') {
       resultIcon = '☀️';
       resultPlan = '🏔️ 冲！执行Day2主方案';
-      resultDetail = '天池开放+天气允许 → <strong>入园直奔天池！</strong><br>上午8-10点黄金窗口<br>依次：天池→瀑布→温泉→绿渊潭→地下森林<br>晚上铁锅炖庆祝！🎉';
+      resultDetail = '天池开放+天气允许 → <strong>10:30入园直奔天池！</strong><br>虽然比理想时间晚，但天池随时可能关闭<br>第一站必须冲！中午人比早上少<br>依次：天池→瀑布→温泉→绿渊潭→地下森林<br>晚上铁锅炖庆祝！🎉';
     } else if (answer === 'closed') {
       resultIcon = '🔄';
       resultPlan = '📋 启动备选方案B';
-      resultDetail = '天池关闭 → <strong>不要灰心！</strong><br>上午：瀑布+温泉群+绿渊潭<br>下午：地下森林深度游<br>第二天（Day3）再冲一次天池！<br>晚上泡温泉放松 ♨️';
+      resultDetail = '天池关闭 → <strong>不要灰心！</strong><br>10:30入园后先走：瀑布+温泉群+绿渊潭<br>下午：地下森林深度游<br>第二天（Day3）再冲一次天池！<br>晚上烧烤大餐放松 🍖';
     } else {
       resultIcon = '🤔';
       resultPlan = '📱 随时关注，灵活调整';
-      resultDetail = '建议：<strong>先到景区再说！</strong><br>上午先去瀑布+温泉+绿渊潭<br>随时刷新公众号看天池动态<br>一旦开放立刻坐倒站车上山！';
+      resultDetail = '建议：<strong>10:30入园后先走其他景点</strong><br>瀑布→温泉→绿渊潭→地下森林<br>随时刷新公众号看天池动态<br>一旦开放立刻坐倒站车上山！';
     }
 
     body.innerHTML = `
@@ -1915,6 +2231,229 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2000);
 }
 
+// ===== TIANCHI STATUS CHECK =====
+function checkTianchiStatus() {
+  // Try to open WeChat app
+  const now = Date.now();
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isIOS) {
+    window.location.href = 'weixin://';
+  } else {
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = 'weixin://';
+    document.body.appendChild(iframe);
+    setTimeout(() => {
+      document.body.removeChild(iframe);
+      if (Date.now() - now > 2200) return; // app opened
+    }, 2000);
+  }
+
+  // Show instruction toast
+  showToast('📱 微信搜「长白山」公众号 → 菜单「景区服务」→ 天池开放公告');
+
+  // Pop up a more detailed modal after a delay
+  setTimeout(() => {
+    document.getElementById('modalIcon').textContent = '📡';
+    document.getElementById('modalTitle').textContent = '查询天池开放状态';
+    document.getElementById('modalText').innerHTML = '① 打开微信<br>② 搜索「<b>长白山</b>」公众号并关注<br>③ 底部菜单 → <b>景区服务</b><br>④ 点击 <b>天池开放公告</b><br><br>每天早6点更新当天状态';
+    document.getElementById('modalOverlay').classList.add('open');
+  }, 2500);
+}
+
+// ===== DIDI DEEP LINK =====
+function callDidi(name, lat, lng) {
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const now = Date.now();
+  const launched = { val: false };
+
+  // Multiple scheme attempts for DiDi
+  const schemes = [
+    `didi://`,
+    `diditaxi://`,
+    `didi://dache?endLat=${lat}&endLng=${lng}&endName=${encodeURIComponent(name)}`,
+  ];
+
+  // Fallback: DiDi universal link / web page
+  const fallbackUrl = `https://common.diditaxi.com.cn/general/webEntry/index?endLat=${lat}&endLng=${lng}&endName=${encodeURIComponent(name)}`;
+
+  if (isIOS) {
+    // iOS: try scheme first, then universal link
+    let idx = 0;
+    function tryNext() {
+      if (idx >= schemes.length) {
+        window.location.href = fallbackUrl;
+        return;
+      }
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = schemes[idx];
+      document.body.appendChild(iframe);
+      idx++;
+
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+        if (Date.now() - now < 2500) {
+          // App didn't open, try next
+          tryNext();
+        }
+      }, 2000);
+    }
+    tryNext();
+  } else {
+    // Android: try scheme with intent
+    const intentUrl = `intent://#Intent;scheme=didi;package=com.sdu.didi.psnger;end;`;
+    window.location.href = schemes[0];
+    setTimeout(() => {
+      if (Date.now() - now < 2200) {
+        window.location.href = fallbackUrl;
+      }
+    }, 2000);
+  }
+
+  showToast(`🚕 正在唤起滴滴打车去「${name}」...`);
+}
+
+// ===== DARK MODE =====
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  document.getElementById('darkToggle').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('cbs_dark', isDark ? '1' : '0');
+}
+function initDarkMode() {
+  if (localStorage.getItem('cbs_dark') === '1') {
+    document.body.classList.add('dark');
+    document.getElementById('darkToggle').textContent = '☀️';
+  }
+}
+
+// ===== SMART REMINDERS =====
+const reminders = [
+  { time: [6,27,9,55], msg: '⏰ 10分钟后出发去池北区集散中心！收拾装备，带齐身份证+雨衣+防晒', id:'day2_go' },
+  { time: [6,28,16,20], msg: '🚄 1小时后G142发车！现在该出发去长白山站了', id:'day3_station' },
+];
+function checkReminders() {
+  const now = new Date();
+  const m = now.getMonth()+1, d = now.getDate(), h = now.getHours(), min = now.getMinutes();
+  const shown = JSON.parse(localStorage.getItem('cbs_reminders_shown') || '{}');
+
+  reminders.forEach(r => {
+    const [rm, rd, rh, rmin] = r.time;
+    if (m === rm && d === rd && h === rh && min === rmin && !shown[r.id]) {
+      const badge = document.getElementById('reminderBadge');
+      badge.textContent = r.msg;
+      badge.classList.add('show');
+      setTimeout(() => badge.classList.remove('show'), 8000);
+      shown[r.id] = true;
+      localStorage.setItem('cbs_reminders_shown', JSON.stringify(shown));
+    }
+  });
+}
+
+// ===== SMART PACKING HIGHLIGHT =====
+function highlightCriticalItems() {
+  const critical = ['ci_0', 'ci_5', 'ci_6', 'ci_10', 'ci_11', 'ci_15'];
+  critical.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.classList.contains('checked')) {
+      el.style.background = '#fff8e7';
+      el.style.borderLeft = '3px solid #e8a850';
+      const note = el.querySelector('.ci-note');
+      if (note) note.textContent = '🔥 6月必带！' + note.textContent;
+    }
+  });
+}
+
+// ===== PWA INSTALL PROMPT =====
+function showPwaPrompt() {
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isStandalone = navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+  if (isStandalone) return; // already installed
+  if (!isIOS && !window.matchMedia('(display-mode: browser)').matches) return;
+
+  const dismissed = localStorage.getItem('cbs_pwa_dismissed');
+  if (dismissed) return;
+
+  const banner = document.createElement('div');
+  banner.id = 'pwaBanner';
+  banner.style.cssText = 'position:fixed;bottom:90px;left:16px;right:16px;background:#333;color:#fff;padding:14px 16px;border-radius:14px;z-index:350;display:flex;align-items:center;gap:10px;font-size:13px;box-shadow:0 4px 20px rgba(0,0,0,0.4);max-width:400px;margin:0 auto;';
+  banner.innerHTML = `
+    <span style="font-size:28px;">🏔️</span>
+    <span style="flex:1;">${isIOS ? '点下方 <b>分享按钮</b> → <b>添加到主屏幕</b>，像App一样用' : '添加到桌面，像App一样打开'}</span>
+    <button onclick="this.parentElement.remove();localStorage.setItem('cbs_pwa_dismissed','1');" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px;">✕</button>
+  `;
+  document.body.appendChild(banner);
+  setTimeout(() => { const b = document.getElementById('pwaBanner'); if(b) b.remove(); }, 10000);
+}
+
+// ===== OFFLINE DETECTION =====
+function initOfflineDetection() {
+  function updateStatus() {
+    if (!navigator.onLine) {
+      showToast('📶 当前处于离线状态，已缓存的内容仍可查看');
+    }
+  }
+  window.addEventListener('offline', updateStatus);
+  window.addEventListener('online', () => showToast('✅ 网络已恢复'));
+}
+
+// ===== NETWORK CACHE =====
+function precacheResources() {
+  if ('caches' in window) {
+    caches.open('changbaishan-v1').then(cache => {
+      cache.addAll([
+        window.location.href,
+        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+      ]).catch(() => {});
+    });
+  }
+}
+
+// ===== SERVICE WORKER REGISTRATION =====
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      console.log('SW registered:', reg.scope);
+    }).catch(err => {
+      console.log('SW registration failed (expected on first load):', err.message);
+    });
+  });
+}
+
+// ===== CHROME INSTALL PROMPT =====
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show a custom install button
+  const banner = document.getElementById('pwaBanner');
+  if (banner) {
+    banner.innerHTML = `
+      <span style="font-size:28px;">🏔️</span>
+      <span style="flex:1;"><b>点击安装</b>长白山攻略App</span>
+      <button onclick="installApp()" style="background:#e8a850;color:#fff;border:none;padding:8px 16px;border-radius:16px;font-weight:600;cursor:pointer;font-family:inherit;">安装</button>
+      <button onclick="document.getElementById('pwaBanner').remove();localStorage.setItem('cbs_pwa_dismissed','1');" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px;">✕</button>
+    `;
+  }
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(result => {
+      if (result.outcome === 'accepted') {
+        showToast('✅ 安装成功！桌面找到「长白山攻略」图标');
+      }
+      deferredPrompt = null;
+      const banner = document.getElementById('pwaBanner');
+      if (banner) banner.remove();
+    });
+  }
+}
+
 // ===== SNOW PARTICLES =====
 function createSnowflakes() {
   const container = document.getElementById('snowflakes');
@@ -1932,7 +2471,7 @@ function createSnowflakes() {
 }
 
 // ===== SCROLL SPY =====
-const navSections = ['sec-wizard','sec-itinerary','sec-food','sec-stay','sec-packing','sec-budget'];
+const navSections = ['sec-wizard','sec-itinerary','sec-map','sec-route','sec-food','sec-photo','sec-stay','sec-packing'];
 const scrollObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -1940,7 +2479,7 @@ const scrollObserver = new IntersectionObserver((entries) => {
         const btnText = n.textContent.trim();
         const secMap = {
           'sec-wizard': '向导', 'sec-itinerary': '行程', 'sec-food': '美食',
-          'sec-stay': '住宿', 'sec-packing': '清单', 'sec-budget': '预算'
+          'sec-map': '地图', 'sec-route': '路线', 'sec-food': '美食', 'sec-photo': '拍照', 'sec-stay': '住宿', 'sec-packing': '清单'
         };
         n.classList.toggle('active', btnText === (secMap[entry.target.id] || ''));
       });
@@ -1957,9 +2496,16 @@ function init() {
   renderBudget();
   renderAchievements();
   createSnowflakes();
+  initDarkMode();
+  initOfflineDetection();
+  precacheResources();
+  setTimeout(showPwaPrompt, 3000);
+  setTimeout(highlightCriticalItems, 500);
+  checkReminders();
+  setInterval(checkReminders, 30000);
 
   // Observe sections for achievements
-  navSections.concat(['sec-attractions','sec-alternative','sec-tips','sec-roulette','sec-achievements','sec-tickets']).forEach(id => {
+  navSections.concat(['sec-attractions','sec-route','sec-photo','sec-alternative','sec-tips','sec-roulette','sec-achievements','sec-tickets']).forEach(id => {
     const el = document.getElementById(id);
     if (el) achievementObserver.observe(el);
   });
@@ -1972,6 +2518,187 @@ function init() {
 }
 
 init();
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ===== MAP =====
+const locations = {
+  hotel:      { lat: 42.421, lng: 128.107, name: '天添·Loft民宿', emoji: '🏠', type:'stay' },
+  station:    { lat: 42.395, lng: 128.110, name: '长白山高铁站', emoji: '🚄', type:'transport' },
+  jisanzhongxin: { lat: 42.418, lng: 128.105, name: '池北区交通集散中心', emoji: '📍', type:'transport' },
+  tianchi:    { lat: 42.006, lng: 128.057, name: '天池主峰 (海拔2189m)', emoji: '🏔️', type:'attraction' },
+  pubu:       { lat: 42.035, lng: 128.069, name: '长白瀑布', emoji: '🌊', type:'attraction' },
+  wenquan:    { lat: 42.036, lng: 128.068, name: '聚龙温泉群', emoji: '♨️', type:'attraction' },
+  lvyuantan:  { lat: 42.040, lng: 128.070, name: '绿渊潭', emoji: '💚', type:'attraction' },
+  senlin:     { lat: 42.055, lng: 128.078, name: '地下森林', emoji: '🌲', type:'attraction' },
+  foodstreet: { lat: 42.420, lng: 128.106, name: '恩都里美食街', emoji: '🍜', type:'food' },
+  meirensong: { lat: 42.427, lng: 128.108, name: '美人松公园', emoji: '🌲', type:'sight' },
+};
+
+let map, userMarker, routeLine, destMarker;
+let currentLatLng = null;
+
+// ===== GCJ-02 Coordinate Conversion (WGS84 → 火星坐标) =====
+function wgs84ToGcj02(lat, lng) {
+  const PI = Math.PI;
+  const a = 6378245.0;
+  const ee = 0.00669342162296594323;
+  function transformLat(x, y) {
+    let ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));
+    ret += (20.0 * Math.sin(6.0 * x * PI) + 20.0 * Math.sin(2.0 * x * PI)) * 2.0 / 3.0;
+    ret += (20.0 * Math.sin(y * PI) + 40.0 * Math.sin(y / 3.0 * PI)) * 2.0 / 3.0;
+    ret += (160.0 * Math.sin(y / 12.0 * PI) + 320.0 * Math.sin(y * PI / 30.0)) * 2.0 / 3.0;
+    return ret;
+  }
+  const dLat = transformLat(lng - 105.0, lat - 35.0);
+  const dLng = transformLat(lng - 105.0, lat - 35.0); // intentional - same formula for both
+  const radLat = lat / 180.0 * PI;
+  let magic = Math.sin(radLat);
+  magic = 1 - ee * magic * magic;
+  const sqrtMagic = Math.sqrt(magic);
+  const dLat2 = (dLat * 180.0) / ((a * (1 - ee)) / (magic * sqrtMagic) * PI);
+  const dLng2 = (dLng * 180.0) / (a / sqrtMagic * Math.cos(radLat) * PI);
+  return [lat + dLat2, lng + dLng2];
+}
+
+function initMap() {
+  if (typeof L === 'undefined') { setTimeout(initMap, 500); return; }
+  map = L.map('mapContainer', { zoomControl: true }).setView([42.30, 128.08], 10);
+
+  // Use 高德 (Amap) tiles - fast in China, no API key needed
+  L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+    subdomains: ['1','2','3','4'],
+    attribution: '© 高德地图',
+    maxZoom: 18,
+  }).addTo(map);
+
+  // Add OpenStreetMap as fallback
+  const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+  });
+  let gaodeFailed = false;
+  // If 高德 fails, fall back to OSM after 5 seconds
+  setTimeout(() => {
+    const tiles = document.querySelectorAll('.leaflet-tile');
+    if (tiles.length === 0 && !gaodeFailed) {
+      // Tiles didn't load, try OSM
+      map.eachLayer(l => { if (l._url && l._url.includes('autonavi')) map.removeLayer(l); });
+      osmLayer.addTo(map);
+    }
+  }, 8000);
+
+  Object.entries(locations).forEach(([key, loc]) => {
+    // Convert to GCJ-02 for 高德 tiles
+    const [gcjLat, gcjLng] = wgs84ToGcj02(loc.lat, loc.lng);
+    const icon = L.divIcon({
+      html: `<div style="font-size:24px;">${loc.emoji}</div>`,
+      className: 'map-marker-icon',
+      iconSize: [32, 32], iconAnchor: [16, 16],
+    });
+    const marker = L.marker([gcjLat, gcjLng], { icon }).addTo(map);
+    marker.bindPopup(`<b>${loc.emoji} ${loc.name}</b><br><small>点击查看路线</small>`);
+    marker.on('click', () => navigateTo(key));
+  });
+
+  locateMe();
+}
+
+function locateMe() {
+  if (!navigator.geolocation) {
+    document.getElementById('mapRouteInfo').textContent = '⚠️ 浏览器不支持定位，请用手机浏览器打开';
+    return;
+  }
+  document.getElementById('mapRouteInfo').textContent = '📍 正在获取位置...';
+  navigator.geolocation.watchPosition(
+    (pos) => {
+      // Store raw WGS84 for routing
+      currentLatLng = [pos.coords.latitude, pos.coords.longitude];
+      // Convert to GCJ-02 for display on 高德 map
+      const [gcjLat, gcjLng] = wgs84ToGcj02(pos.coords.latitude, pos.coords.longitude);
+      if (!userMarker) {
+        userMarker = L.circleMarker([gcjLat, gcjLng], {
+          radius: 8, color: '#0066ff', fillColor: '#3388ff',
+          fillOpacity: 0.8, weight: 3,
+        }).addTo(map);
+        userMarker.bindPopup('<b>📍 我的位置</b>').openPopup();
+        map.setView([gcjLat, gcjLng], 14);
+      } else {
+        userMarker.setLatLng([gcjLat, gcjLng]);
+      }
+      document.getElementById('mapRouteInfo').textContent = '✅ 已定位！点击下方目的地查看路线';
+    },
+    (err) => {
+      document.getElementById('mapRouteInfo').textContent = '⚠️ 无法获取位置（请允许定位权限）';
+    },
+    { enableHighAccuracy: true, maximumAge: 30000, timeout: 15000 }
+  );
+}
+
+async function navigateTo(key) {
+  const dest = locations[key];
+  if (!dest) return;
+
+  document.querySelectorAll('.map-dest-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.map-dest-btn').forEach(b => {
+    if (b.textContent.includes(dest.emoji)) b.classList.add('active');
+  });
+
+  if (destMarker) map.removeLayer(destMarker);
+  if (routeLine) map.removeLayer(routeLine);
+
+  const [gcjLat, gcjLng] = wgs84ToGcj02(dest.lat, dest.lng);
+  const icon = L.divIcon({
+    html: '<div style="font-size:28px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));">🎯</div>',
+    className: 'map-dest-icon', iconSize: [36, 36], iconAnchor: [18, 18],
+  });
+  destMarker = L.marker([gcjLat, gcjLng], { icon }).addTo(map);
+  destMarker.bindPopup(`<b>🎯 ${dest.name}</b>`).openPopup();
+
+  const bounds = [];
+  if (currentLatLng) bounds.push(wgs84ToGcj02(currentLatLng[0], currentLatLng[1]));
+  bounds.push([gcjLat, gcjLng]);
+  map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
+
+  if (currentLatLng) {
+    try {
+      document.getElementById('mapRouteInfo').textContent = '🔄 正在计算路线...';
+      const [lt, lg] = currentLatLng; // WGS84 for routing
+      const url = `https://router.project-osrm.org/route/v1/driving/${lg},${lt};${dest.lng},${dest.lat}?geometries=geojson&overview=full&steps=false`;
+      const resp = await fetch(url);
+      const data = await resp.json();
+      if (data.routes && data.routes.length > 0) {
+        const route = data.routes[0];
+        const coords = route.geometry.coordinates.map(c => [c[1], c[0]]);
+        routeLine = L.polyline(coords, { color: '#0066ff', weight: 4, opacity: 0.7, dashArray: '10, 5' }).addTo(map);
+        const distKm = (route.distance / 1000).toFixed(1);
+        const timeMin = Math.round(route.duration / 60);
+        document.getElementById('mapRouteInfo').innerHTML = `🚗 距 <strong>${dest.name}</strong> 约 <strong>${distKm}km</strong> · 驾车约 <strong>${timeMin}分钟</strong>`;
+      }
+    } catch(e) {
+      const dist = getDistance(currentLatLng, [dest.lat, dest.lng]);
+      document.getElementById('mapRouteInfo').innerHTML = `📏 距 <strong>${dest.name}</strong> 直线约 <strong>${dist}km</strong>`;
+    }
+  } else {
+    document.getElementById('mapRouteInfo').textContent = '⚠️ 请先允许定位权限，才能显示路线和距离';
+  }
+}
+
+function getDistance(a, b) {
+  const R = 6371;
+  const dLat = (b[0] - a[0]) * Math.PI / 180;
+  const dLon = (b[1] - a[1]) * Math.PI / 180;
+  const la1 = a[0] * Math.PI / 180;
+  const la2 = b[0] * Math.PI / 180;
+  const aa = Math.sin(dLat/2)**2 + Math.cos(la1)*Math.cos(la2)*Math.sin(dLon/2)**2;
+  return (R * 2 * Math.atan2(Math.sqrt(aa), Math.sqrt(1-aa))).toFixed(1);
+}
+
+function navFromItinerary(key) {
+  scrollToSection('sec-map');
+  setTimeout(() => navigateTo(key), 500);
+}
+
+window.addEventListener('load', () => { setTimeout(initMap, 800); });
 </script>
 
 </body>
