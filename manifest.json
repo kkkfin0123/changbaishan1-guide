@@ -1,8 +1,8 @@
 {
   "name": "长白山旅游攻略",
   "short_name": "长白山攻略",
-  "start_url": "/changbaishan-guide/",
-  "scope": "/changbaishan-guide/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "theme_color": "#2d5a4b",
   "background_color": "#f7f5f0"
