@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>长白山旅游攻略 · 3天2晚情侣游</title>
+<style>
+:root {
+  --primary: #2d5a4b;
+  --primary-light: #3a7d64;
+  --accent: #e8a850;
+  --accent-light: #f5c882;
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --text: #2c2c2c;
+  --text-light: #6b6b6b;
+  --danger: #d94a4a;
+  --success: #4a9c6c;
+  --info: #4a8fc9;
+  --border: #e8e3da;
+  --shadow: 0 2px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+* {
+  margin:0; padding:0; box-sizing:border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 100px;
+  padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+  max-width: 640px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: linear-gradient(160deg, #1a3c2f 0%, #2d5a4b 30%, #3a7d64 60%, #5a9e7c 100%);
+  color: #fff;
+  padding: 36px 20px 48px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
+  animation: heroShimmer 8s ease-in-out infinite;
+}
+@keyframes heroShimmer {
+  0%,100% { transform: translate(0,0); }
+  50% { transform: translate(10px,-10px); }
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 40px;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+.hero .mountain-icon {
+  font-size: 52px;
+  display: block;
+  margin-bottom: 4px;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.hero h1 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  position: relative;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.hero .subtitle {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-top: 6px;
+  position: relative;
+  letter-spacing: 1px;
+}
+.hero .trip-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 13px;
+  margin-top: 12px;
+  position: relative;
+}
+.hero .countdown {
+  margin-top: 16px;
+  font-size: 13px;
+  opacity: 0.9;
+  position: relative;
+}
+.hero .countdown strong {
+  font-size: 18px;
+  color: var(--accent-light);
+}
+
+/* Snow particles */
+.snowflakes {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.snowflake {
+  position: absolute;
+  color: rgba(255,255,255,0.3);
+  font-size: 12px;
+  animation: snowfall linear infinite;
+}
+@keyframes snowfall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* ===== WEATHER PANEL ===== */
+.weather-panel {
+  margin: -24px 16px 12px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 2;
+}
+.weather-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.weather-header .wh-title {
+  font-weight: 700;
+  font-size: 15px;
+  display: flex; align-items: center; gap: 6px;
+}
+.weather-header .wh-update {
+  font-size: 11px;
+  color: var(--text-light);
+}
+.weather-now {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px;
+  background: linear-gradient(135deg, #f0f7f3, #e8f2ec);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+.weather-now .wn-icon { font-size: 48px; }
+.weather-now .wn-temp { font-size: 36px; font-weight: 700; color: var(--primary); }
+.weather-now .wn-detail { font-size: 12px; color: var(--text-light); line-height: 1.8; }
+.weather-forecast {
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+}
+.weather-forecast::-webkit-scrollbar { display: none; }
+.wf-day {
+  flex: 0 0 75px; text-align: center;
+  padding: 10px 6px;
+  background: #f9f8f5;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+}
+.wf-day .wf-date { font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+.wf-day .wf-icon { font-size: 28px; margin: 4px 0; }
+.wf-day .wf-temp { font-weight: 600; }
+.wf-day .wf-low { color: var(--text-light); font-size: 11px; }
+.wf-day .wf-rain { font-size: 10px; color: var(--info); margin-top: 2px; }
+.wf-day.today { background: #e8f2ec; border: 1px solid #c8dcd2; }
+.weather-loading {
+  text-align: center; padding: 20px; color: var(--text-light); font-size: 13px;
+}
+.weather-error {
+  text-align: center; padding: 16px; color: var(--danger); font-size: 13px;
+  background: #fef0f0; border-radius: var(--radius-sm);
+}
+.weather-note {
+  margin-top: 10px; font-size: 11px; color: var(--text-light);
+  padding: 8px 10px; background: #fff8e7; border-radius: 8px; border-left: 3px solid var(--accent);
+}
+
+button, .check-item, .day-header, .plan-tab, .nav-item, .wizard-btn, .list-item, .info-card, .fab-menu-item, .ticket-link {
+  touch-action: manipulation;
+}
+.quick-stats {
+  display: flex; gap: 8px; padding: 8px 16px 16px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.quick-stats::-webkit-scrollbar { display: none; }
+.stat-card {
+  flex: 0 0 auto;
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  min-width: 85px;
+  cursor: pointer;
+  transition: transform var(--transition);
+  touch-action: manipulation;
+}
+.stat-card:active { transform: scale(0.95); }
+.stat-card .stat-icon { font-size: 22px; }
+.stat-card .stat-val { font-size: 13px; font-weight: 600; color: var(--primary); margin-top: 2px; }
+.stat-card .stat-label { font-size: 10px; color: var(--text-light); }
+
+/* ===== SECTION HEADERS ===== */
+.section-title {
+  display: flex; align-items: center; gap: 8px;
+  padding: 24px 20px 10px;
+  font-size: 18px; font-weight: 700; color: var(--primary);
+  scroll-margin-top: 20px;
+}
+.section-title .title-icon { font-size: 22px; }
+.section-title .title-badge {
+  font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 10px;
+  background: #e6f4ec; color: var(--primary-light); margin-left: auto;
+}
+
+/* ===== DECISION WIZARD ===== */
+.wizard {
+  margin: 0 16px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.wizard-steps {
+  display: flex; padding: 12px 16px; gap: 4px; background: #f9f8f5;
+  border-bottom: 1px solid var(--border);
+}
+.wizard-step-dot {
+  flex: 1; height: 4px; border-radius: 2px; background: var(--border);
+  transition: background var(--transition);
+}
+.wizard-step-dot.done { background: var(--success); }
+.wizard-step-dot.active { background: var(--accent); }
+.wizard-body { padding: 20px 16px; min-height: 160px; }
+.wizard-body h3 { font-size: 16px; margin-bottom: 14px; }
+.wizard-options { display: flex; flex-direction: column; gap: 10px; }
+.wizard-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: left;
+  font-family: inherit;
+  color: var(--text);
+  width: 100%;
+}
+.wizard-btn:hover, .wizard-btn:active {
+  border-color: var(--primary-light);
+  background: #f0f7f3;
+  transform: translateX(4px);
+}
+.wizard-btn .wb-icon { font-size: 24px; flex-shrink: 0; }
+.wizard-btn .wb-label { font-weight: 600; }
+.wizard-btn .wb-desc { font-size: 11px; color: var(--text-light); display: block; }
+.wizard-result {
+  text-align: center; padding: 10px 0;
+}
+.wizard-result .wr-icon { font-size: 56px; animation: bounce 1s ease infinite; }
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+.wizard-result .wr-plan { font-weight: 700; font-size: 18px; color: var(--primary); margin: 8px 0; }
+.wizard-result .wr-detail { font-size: 13px; color: var(--text-light); line-height: 1.8; margin-bottom: 12px; }
+.wizard-reset {
+  font-size: 12px; color: var(--primary-light); cursor: pointer;
+  text-decoration: underline; border: none; background: none; font-family: inherit;
+  padding: 4px 8px;
+}
+
+/* ===== TICKET LINKS ===== */
+.ticket-links {
+  margin: 0 16px; display: flex; flex-direction: column; gap: 8px;
+}
+.ticket-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: var(--text);
+  transition: all var(--transition);
+  border: 1px solid transparent;
+}
+.ticket-link:active { transform: scale(0.98); background: #f9f8f5; }
+.ticket-link.priority {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, #fffbf0, #fff8e7);
+}
+.ticket-link .tl-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+  background: #f0f7f3;
+}
+.ticket-link.priority .tl-icon { background: #fef3e4; }
+.ticket-link .tl-info { flex: 1; }
+.ticket-link .tl-name { font-weight: 600; font-size: 14px; }
+.ticket-link .tl-desc { font-size: 11px; color: var(--text-light); }
+.ticket-link .tl-arrow { color: #ccc; font-size: 18px; }
+
+/* ===== ITINERARY ===== */
+.itinerary { padding: 0 16px; }
+.day-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform var(--transition);
+}
+.day-header {
+  padding: 16px 18px;
+  display: flex; align-items: center;
+  cursor: pointer; user-select: none;
+  transition: background 0.2s;
+}
+.day-header:active { background: #f9f8f5; }
+.day-num {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; color: #fff; flex-shrink: 0;
+}
+.day1 .day-num { background: #5a9e7c; }
+.day2 .day-num { background: #3a7d64; }
+.day3 .day-num { background: #2d5a4b; }
+.day-info { flex: 1; margin-left: 12px; }
+.day-title { font-weight: 600; font-size: 15px; }
+.day-date { font-size: 12px; color: var(--text-light); }
+.day-arrow {
+  font-size: 18px; color: #ccc;
+  transition: transform var(--transition);
+}
+.day-card.open .day-arrow { transform: rotate(180deg); color: var(--primary); }
+.day-body { display: none; padding: 0 18px 18px; }
+.day-card.open .day-body { display: block; animation: slideDown 0.3s ease; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 8px; top: 4px; bottom: 4px;
+  width: 2px; background: var(--border); border-radius: 1px;
+}
+.timeline-item { position: relative; margin-bottom: 14px; font-size: 14px; }
+.timeline-item::before {
+  content: '';
+  position: absolute; left: -18px; top: 6px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+}
+.timeline-item .tl-time { font-size: 11px; color: var(--accent); font-weight: 600; }
+.timeline-item .tl-content { margin-top: 2px; }
+.timeline-item .tl-note {
+  font-size: 11px; color: var(--text-light); margin-top: 2px;
+  padding: 4px 8px; background: #f9f8f5; border-radius: 6px;
+  border-left: 2px solid var(--accent-light);
+}
+
+/* ===== TAGS ===== */
+.tag {
+  display: inline-block; font-size: 10px; padding: 2px 8px;
+  border-radius: 10px; font-weight: 500; margin-left: 4px;
+}
+.tag-green { background: #e6f4ec; color: #2d5a4b; }
+.tag-orange { background: #fef3e4; color: #c2781a; }
+.tag-red { background: #fde8e8; color: #b91c1c; }
+.tag-blue { background: #e4eef8; color: #2d6a9b; }
+
+/* ===== CARD GRID ===== */
+.card-grid {
+  display: flex; gap: 10px; padding: 0 16px;
+  overflow-x: auto; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  -webkit-scroll-snap-type: x mandatory;
+}
+.card-grid::-webkit-scrollbar { display: none; }
+.info-card {
+  flex: 0 0 160px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  box-shadow: var(--shadow);
+  scroll-snap-align: start;
+  transition: transform var(--transition);
+}
+.info-card:active { transform: scale(0.96); }
+.info-card .card-emoji { font-size: 30px; margin-bottom: 8px; display: block; }
+.info-card .card-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.info-card .card-desc { font-size: 12px; color: var(--text-light); line-height: 1.5; }
+
+/* ===== FOOD / HOTEL LIST ===== */
+.list-section { padding: 0 16px; }
+.list-item {
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  display: flex; gap: 12px; align-items: flex-start;
+  transition: transform var(--transition);
+}
+.list-item:active { transform: scale(0.98); }
+.list-item .item-emoji {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0; background: #f7f5f0;
+}
+.list-item .item-info { flex: 1; min-width: 0; }
+.list-item .item-name { font-weight: 600; font-size: 14px; }
+.list-item .item-meta { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+.list-item .item-dish { font-size: 11px; color: var(--accent); margin-top: 4px; }
+.list-item .item-price {
+  font-weight: 700; font-size: 14px; color: var(--primary);
+  flex-shrink: 0; text-align: right;
+}
+
+/* ===== ALTERNATIVE PLANS ===== */
+.alt-plans { padding: 0 16px; }
+.plan-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+.plan-tab {
+  flex: 1; text-align: center;
+  padding: 10px 8px; border-radius: 20px;
+  font-size: 12px; font-weight: 500;
+  background: var(--card); border: 1px solid var(--border);
+  cursor: pointer; transition: all var(--transition); user-select: none;
+  font-family: inherit;
+}
+.plan-tab:active { transform: scale(0.96); }
+.plan-tab.active {
+  background: var(--primary); color: #fff; border-color: var(--primary);
+}
+.plan-content { display: none; }
+.plan-content.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.plan-card {
+  background: var(--card); border-radius: var(--radius);
+  padding: 16px; box-shadow: var(--shadow);
+  font-size: 14px; line-height: 1.8;
+}
+
+/* ===== CHECKLIST ===== */
+.checklist { padding: 0 16px; }
+.progress-bar-wrap { padding: 4px 16px 8px; }
+.progress-bar-outer { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-bar-inner {
+  height: 100%; background: linear-gradient(90deg, var(--success), #6dba8a);
+  border-radius: 4px; transition: width 0.5s ease;
+}
+.progress-text { font-size: 11px; color: var(--text-light); text-align: right; margin-top: 3px; }
+.checklist-cat {
+  font-size: 13px; font-weight: 600; color: var(--primary);
+  margin: 14px 0 8px; padding-left: 4px;
+}
+.check-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; background: var(--card);
+  border-radius: var(--radius-sm); margin-bottom: 6px;
+  cursor: pointer; user-select: none;
+  transition: all var(--transition);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+.check-item:active { transform: scale(0.98); }
+.check-item.checked { opacity: 0.55; background: #f5faf7; }
+.check-item.checked .ci-text { text-decoration: line-through; }
+.check-box {
+  width: 24px; height: 24px; border-radius: 7px;
+  border: 2px solid #d0d0d0; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition);
+  font-size: 12px; color: transparent;
+}
+.check-item.checked .check-box {
+  background: var(--success); border-color: var(--success); color: #fff;
+  animation: popIn 0.3s ease;
+}
+@keyframes popIn {
+  0% { transform: scale(0.5); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.ci-text { flex: 1; font-size: 14px; }
+.ci-note { font-size: 11px; color: var(--text-light); }
+
+/* ===== BUDGET CALCULATOR ===== */
+.budget-section { padding: 0 16px; }
+.budget-table {
+  width: 100%; background: var(--card);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+}
+.budget-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 14px;
+}
+.budget-row:last-child { border-bottom: none; }
+.budget-row.total {
+  background: #f0f7f3; font-weight: 700; font-size: 16px; color: var(--primary);
+}
+.budget-row .br-label { display: flex; align-items: center; gap: 6px; }
+.budget-row .br-price { font-weight: 500; }
+.budget-row input[type=range] {
+  width: 80px; accent-color: var(--primary-light);
+}
+.budget-row .br-custom {
+  display: flex; align-items: center; gap: 8px;
+}
+.budget-row .br-custom input {
+  width: 70px; padding: 4px 8px; border: 1px solid var(--border);
+  border-radius: 6px; font-size: 13px; text-align: center;
+  font-family: inherit;
+}
+.budget-bar { display: flex; gap: 2px; padding: 8px 0 16px; }
+.budget-bar-seg { height: 6px; border-radius: 3px; transition: width 0.4s ease; }
+.budget-bar-seg.tickets { background: #5a9e7c; }
+.budget-bar-seg.stay { background: #3a7d64; }
+.budget-bar-seg.food { background: #e8a850; }
+.budget-bar-seg.transport { background: #c9b99a; }
+.budget-bar-seg.other { background: #d0d0d0; }
+.budget-legend { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 0 16px; font-size: 11px; }
+.budget-legend span { display: flex; align-items: center; gap: 4px; }
+.budget-legend .dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+
+/* ===== RESTAURANT ROULETTE ===== */
+.roulette-wrap {
+  margin: 0 16px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+.roulette-display {
+  height: 80px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700;
+  color: var(--primary);
+  position: relative;
+  overflow: hidden;
+}
+.roulette-display.spinning {
+  animation: slotSpin 0.15s linear infinite;
+}
+@keyframes slotSpin {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+.roulette-emoji { font-size: 48px; display: block; margin-bottom: 4px; }
+.roulette-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: linear-gradient(135deg, var(--accent), #d4953d);
+  color: #fff; border: none; border-radius: 25px;
+  font-size: 16px; font-weight: 600; cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition);
+  box-shadow: 0 4px 16px rgba(232,168,80,0.4);
+  margin-top: 12px;
+}
+.roulette-btn:active { transform: scale(0.95); }
+.roulette-history {
+  margin-top: 14px; font-size: 11px; color: var(--text-light);
+}
+
+/* ===== ACHIEVEMENTS ===== */
+.achievements { padding: 0 16px; }
+.ach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ach-card {
+  background: var(--card); border-radius: var(--radius-sm);
+  padding: 14px 12px; text-align: center;
+  box-shadow: var(--shadow); transition: all var(--transition);
+  border: 2px solid transparent;
+}
+.ach-card.unlocked { border-color: var(--accent); background: #fffdf7; }
+.ach-card.locked { opacity: 0.5; filter: grayscale(0.3); }
+.ach-card .ach-icon { font-size: 32px; display: block; margin-bottom: 6px; }
+.ach-card .ach-name { font-weight: 600; font-size: 13px; }
+.ach-card .ach-desc { font-size: 10px; color: var(--text-light); margin-top: 2px; }
+.ach-card .ach-badge {
+  display: inline-block; margin-top: 6px;
+  font-size: 10px; padding: 2px 8px; border-radius: 10px;
+  background: #e6f4ec; color: var(--success);
+}
+
+/* ===== TIPS ===== */
+.tips-list { padding: 0 16px; }
+.tip-item {
+  background: var(--card); border-radius: var(--radius-sm);
+  padding: 14px 16px; margin-bottom: 8px;
+  box-shadow: var(--shadow);
+  display: flex; gap: 10px; align-items: flex-start; font-size: 13px;
+}
+.tip-item .tip-num {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--danger); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+
+/* ===== FAB ===== */
+.fab {
+  position: fixed; bottom: 24px; right: 20px;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #d4953d);
+  color: #fff; border: none;
+  font-size: 24px; cursor: pointer;
+  z-index: 200;
+  box-shadow: 0 6px 20px rgba(232,168,80,0.5);
+  transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center;
+  font-family: inherit;
+}
+.fab:active { transform: scale(0.9); }
+.fab.open { transform: rotate(45deg); }
+
+.fab-menu {
+  position: fixed; bottom: 90px; right: 20px;
+  z-index: 199;
+  display: flex; flex-direction: column; gap: 10px;
+  pointer-events: none; opacity: 0;
+  transition: all var(--transition);
+}
+.fab-menu.open { pointer-events: auto; opacity: 1; }
+.fab-menu-item {
+  display: flex; align-items: center; gap: 8px;
+  justify-content: flex-end;
+  cursor: pointer; user-select: none;
+}
+.fab-menu-item .fmi-label {
+  background: rgba(0,0,0,0.75); color: #fff;
+  padding: 5px 12px; border-radius: 15px;
+  font-size: 12px; white-space: nowrap;
+}
+.fab-menu-item .fmi-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--card); border: none;
+  font-size: 18px; cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center;
+}
+.fab-menu-item:active .fmi-btn { transform: scale(0.9); }
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 640px;
+  background: var(--card); border-top: 1px solid var(--border);
+  display: flex; z-index: 100;
+  padding: 4px 0 env(safe-area-inset-bottom, 8px) 0;
+  box-shadow: 0 -2px 16px rgba(0,0,0,0.06);
+}
+.nav-item {
+  flex: 1; text-align: center; padding: 8px 2px;
+  font-size: 10px; color: var(--text-light);
+  cursor: pointer; user-select: none;
+  transition: color var(--transition);
+  border: none; background: none;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  font-family: inherit;
+}
+.nav-item .nav-icon { font-size: 20px; }
+.nav-item.active { color: var(--primary); font-weight: 600; }
+.nav-item:active { opacity: 0.7; }
+
+/* ===== MODAL OVERLAY ===== */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 300; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity var(--transition);
+  padding: 20px;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal-box {
+  background: var(--card); border-radius: var(--radius);
+  padding: 24px; width: 100%; max-width: 360px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.modal-box .modal-icon { font-size: 48px; margin-bottom: 8px; }
+.modal-box .modal-title { font-weight: 700; font-size: 18px; margin-bottom: 8px; }
+.modal-box .modal-text { font-size: 13px; color: var(--text-light); margin-bottom: 16px; line-height: 1.8; }
+.modal-box .modal-close {
+  padding: 10px 28px; border-radius: 20px;
+  background: var(--primary); color: #fff; border: none;
+  font-size: 14px; cursor: pointer; font-family: inherit;
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+  background: #333; color: #fff;
+  padding: 10px 22px; border-radius: 22px;
+  font-size: 13px; z-index: 400; pointer-events: none;
+  opacity: 0; transition: opacity 0.3s;
+}
+.toast.show { opacity: 1; }
+
+/* Train Info */
+.train-info {
+  margin: 0 16px 12px;
+  background: var(--card); border-radius: var(--radius-sm);
+  padding: 14px 16px; box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 12px; font-size: 13px;
+}
+.train-info .train-icon { font-size: 28px; }
+.train-info .train-detail { flex: 1; }
+.train-info .train-route { font-weight: 600; }
+.train-info .train-meta { font-size: 11px; color: var(--text-light); }
+
+@media (min-width: 420px) {
+  .hero h1 { font-size: 32px; }
+  .quick-stats { justify-content: center; }
+  .ach-grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="snowflakes" id="snowflakes"></div>
+  <span class="mountain-icon">🏔️</span>
+  <h1>长白山旅游攻略</h1>
+  <p class="subtitle">3天2晚 · 舒适情侣游</p>
+  <div class="trip-badge">📅 6/26晚 — 6/28 · 💰 人均¥500-1500</div>
+  <div class="countdown" id="countdown">⏳ 加载中...</div>
+</header>
+
+<!-- ===== LIVE WEATHER ===== -->
+<div class="weather-panel" id="weatherPanel">
+  <div class="weather-header">
+    <span class="wh-title">🌤️ 实时天气</span>
+    <span class="wh-update" id="weatherUpdate">加载中...</span>
+  </div>
+  <div class="weather-loading" id="weatherLoading">⏳ 正在获取长白山天气数据...</div>
+  <div id="weatherContent" style="display:none;"></div>
+  <div class="weather-error" id="weatherError" style="display:none;">
+    ⚠️ 天气数据加载失败，请检查网络连接<br>
+    <small style="color:var(--text-light);">或关注「长白山」公众号查看天气</small>
+  </div>
+  <div class="weather-note">
+    💡 <strong>天气解读：</strong>山脚气温与山顶天池温差可达15-20°C。山顶风速>8级（17m/s）时天池大概率关闭。降雨概率>60%建议启动备选方案。
+  </div>
+</div>
+
+<!-- ===== QUICK STATS ===== -->
+<div class="quick-stats">
+  <div class="stat-card" onclick="scrollToSection('sec-wizard')">
+    <div class="stat-icon">🧭</div>
+    <div class="stat-val">决策向导</div>
+    <div class="stat-label">智能推荐方案</div>
+  </div>
+  <div class="stat-card" onclick="scrollToSection('sec-tickets')">
+    <div class="stat-icon">🎫</div>
+    <div class="stat-val">¥305/人</div>
+    <div class="stat-label">门票+车票</div>
+  </div>
+  <div class="stat-card" onclick="scrollToSection('sec-roulette')">
+    <div class="stat-icon">🎲</div>
+    <div class="stat-val">吃什么</div>
+    <div class="stat-label">餐厅摇骰子</div>
+  </div>
+  <div class="stat-card" onclick="scrollToSection('sec-achievements')">
+    <div class="stat-icon">🏆</div>
+    <div class="stat-val">旅行成就</div>
+    <div class="stat-label">打卡解锁</div>
+  </div>
+</div>
+
+<!-- ===== TRAIN INFO ===== -->
+<div class="train-info">
+  <span class="train-icon">🚄</span>
+  <div class="train-detail">
+    <div class="train-route">G3555 · 沈阳北 → 长白山站</div>
+    <div class="train-meta">6月26日（周五）19:01 → 21:04 · 约2小时3分</div>
+  </div>
+</div>
+
+<!-- ===== SECTION: DECISION WIZARD ===== -->
+<div class="section-title" id="sec-wizard">
+  <span class="title-icon">🧭</span> 智能决策向导
+  <span class="title-badge">互动</span>
+</div>
+
+<div class="wizard" id="wizard">
+  <div class="wizard-steps">
+    <div class="wizard-step-dot" id="ws1"></div>
+    <div class="wizard-step-dot" id="ws2"></div>
+    <div class="wizard-step-dot" id="ws3"></div>
+  </div>
+  <div class="wizard-body" id="wizardBody">
+    <h3>🤔 今天该怎么玩？</h3>
+    <p style="font-size:13px;color:var(--text-light);margin-bottom:14px;">回答几个简单问题，帮你自动匹配最佳方案</p>
+    <div class="wizard-options">
+      <button class="wizard-btn" onclick="wizardAnswer('weather','good')">
+        <span class="wb-icon">☀️</span>
+        <span><span class="wb-label">天气不错</span><span class="wb-desc">晴/多云，适合上山</span></span>
+      </button>
+      <button class="wizard-btn" onclick="wizardAnswer('weather','bad')">
+        <span class="wb-icon">🌧️</span>
+        <span><span class="wb-label">天气不好</span><span class="wb-desc">下雨/大风/大雾</span></span>
+      </button>
+      <button class="wizard-btn" onclick="wizardAnswer('weather','unknown')">
+        <span class="wb-icon">🤷</span>
+        <span><span class="wb-label">还不确定</span><span class="wb-desc">先看看其他选项</span></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION: TICKET LINKS ===== -->
+<div class="section-title" id="sec-tickets">
+  <span class="title-icon">🎫</span> 快速购票
+  <span class="title-badge">点击直达</span>
+</div>
+
+<div class="ticket-links">
+  <a href="https://m.ctrip.com/webapp/ticket/detail/46326.html" target="_blank" class="ticket-link priority">
+    <span class="tl-icon">🎫</span>
+    <span class="tl-info">
+      <span class="tl-name">长白山北坡门票预约</span>
+      <span class="tl-desc">携程官方 · 大门票+环保车+倒站车 ¥305</span>
+    </span>
+    <span class="tl-arrow">›</span>
+  </a>
+  <a href="https://mp.weixin.qq.com/" target="_blank" class="ticket-link" onclick="showToast('请在微信搜索「长白山旅游集团」小程序购票'); return false;">
+    <span class="tl-icon">📱</span>
+    <span class="tl-info">
+      <span class="tl-name">微信小程序购票（推荐）</span>
+      <span class="tl-desc">搜索「长白山旅游集团」→ 北景区门票 → 提前1-15天购买</span>
+    </span>
+    <span class="tl-arrow">›</span>
+  </a>
+  <a href="https://www.12306.cn/" target="_blank" class="ticket-link">
+    <span class="tl-icon">🚄</span>
+    <span class="tl-info">
+      <span class="tl-name">12306 返程高铁票</span>
+      <span class="tl-desc">长白山站 → 沈阳北站 · 建议买6/28下午3-6点车次</span>
+    </span>
+    <span class="tl-arrow">›</span>
+  </a>
+  <div class="ticket-link" onclick="showToast('📞 景区咨询：400-000-6789（7:40-19:00）')" style="cursor:pointer;">
+    <span class="tl-icon">📞</span>
+    <span class="tl-info">
+      <span class="tl-name">景区官方咨询电话</span>
+      <span class="tl-desc">400-000-6789 · 7:40-19:00</span>
+    </span>
+    <span class="tl-arrow">📋</span>
+  </div>
+</div>
+
+<!-- ===== SECTION: ITINERARY ===== -->
+<div class="section-title" id="sec-itinerary">
+  <span class="title-icon">📋</span> 每日行程
+</div>
+
+<div class="itinerary">
+  <div class="day-card day1 open" id="day1">
+    <div class="day-header" onclick="toggleDay('day1')">
+      <div class="day-num">D1</div>
+      <div class="day-info">
+        <div class="day-title">抵达长白山 · 入住休整</div>
+        <div class="day-date">6月26日（周五）晚上</div>
+      </div>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-time">19:01</div>
+          <div class="tl-content">🚄 沈阳北站出发，G3555次高铁</div>
+          <div class="tl-note">💡 提前30分钟到站，买点零食车上吃</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">21:04</div>
+          <div class="tl-content">📍 抵达长白山站（二道白河镇）</div>
+          <div class="tl-note">🚕 出站打车到镇上酒店约10分钟，拼车约¥20/人</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">21:30</div>
+          <div class="tl-content">🏨 入住酒店，放行李</div>
+          <div class="tl-note">💡 提前联系酒店确认接站服务，很多酒店免费接送</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">22:00</div>
+          <div class="tl-content">🍜 二道白河镇上吃个夜宵</div>
+          <div class="tl-note">🔥 推荐：星辰岩石烧烤或小黄牛汤饭馆（开到晚11点）</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">23:00</div>
+          <div class="tl-content">😴 早点休息，明天早起上山！</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-card day2" id="day2">
+    <div class="day-header" onclick="toggleDay('day2')">
+      <div class="day-num">D2</div>
+      <div class="day-info">
+        <div class="day-title">北坡景区全天 · 天池冲顶 <span class="tag tag-red">核心日</span></div>
+        <div class="day-date">6月27日（周六）全天</div>
+      </div>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-time">06:30</div>
+          <div class="tl-content">⏰ 起床！查看「长白山」公众号确认天池是否开放</div>
+          <div class="tl-note">📱 如天池关闭 → 使用上方「决策向导」切换方案</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">07:00</div>
+          <div class="tl-content">🍳 酒店早餐或镇上早市（二道白河早市有打糕、冻梨）</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">07:30</div>
+          <div class="tl-content">🚌 到北景区集散中心，刷身份证入园</div>
+          <div class="tl-note">⚠️ 旺季排队人多，尽量7:30前到！</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">08:00-09:00</div>
+          <div class="tl-content">🚌 环保车 → 换倒站车 → 直奔天池主峰！</div>
+          <div class="tl-note">🔥 入园后第一站必须天池！上午云雾最少，能见度最高</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">09:00-10:30</div>
+          <div class="tl-content">🏔️ <strong>天池观景</strong> · A线陡峭/B线平缓，不走回头路</div>
+          <div class="tl-note">📸 拍照点：天池碑石、山顶全景台。海拔2189米，注意高反</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">10:30-11:30</div>
+          <div class="tl-content">🌊 长白瀑布 · 步行栈道20分钟，落差68米</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">11:30-12:30</div>
+          <div class="tl-content">♨️ 聚龙温泉群 + 午餐（温泉蛋 10元/3个，必吃！）</div>
+          <div class="tl-note">🥚 蛋白嫩滑蛋黄流心，长白山独有体验</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">12:30-13:30</div>
+          <div class="tl-content">💚 绿渊潭 · 潭水碧绿如翡翠，拍照绝美</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">13:30-15:00</div>
+          <div class="tl-content">🌲 地下森林 · 木栈道徒步30分钟，天然氧吧</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">15:00-16:00</div>
+          <div class="tl-content">🚌 乘车下山，返回二道白河镇</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">17:30</div>
+          <div class="tl-content">🍖 晚餐：福记东北人家铁锅炖（有二人转表演）</div>
+          <div class="tl-note">🔥 必点：铁锅炖大鹅/排骨锅，贴玉米饼子</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">20:00</div>
+          <div class="tl-content">♨️ 泡温泉（如住温泉酒店）或镇上逛逛夜市</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-card day3" id="day3">
+    <div class="day-header" onclick="toggleDay('day3')">
+      <div class="day-num">D3</div>
+      <div class="day-info">
+        <div class="day-title">休闲体验 · 返程</div>
+        <div class="day-date">6月28日（周日）· 下午/晚上返程</div>
+      </div>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-time">08:00</div>
+          <div class="tl-content">🌅 自然醒！享受悠闲早晨</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">09:00</div>
+          <div class="tl-content">🍳 早午餐：服务大楼冷面 或 金顺朝鲜族汤饭馆</div>
+          <div class="tl-note">🥟 推荐参鸡汤（88元/只）、朝鲜族冷面（25元/碗）</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">10:00-12:00</div>
+          <div class="tl-content">🏞️ <strong>方案A：</strong>如果昨天没看到天池 → 再冲一次！<br>
+          <strong>方案B：</strong>看到了天池 → 二道白河镇休闲游（美人松公园、秋沙鸭公园）<br>
+          <strong>方案C：</strong>包车去西坡或南坡（车程约2小时）</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">12:00-13:00</div>
+          <div class="tl-content">🍽️ 午餐：味特鲜鱼馆（35年老店，冷水鱼一鱼三吃）</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">13:00-15:00</div>
+          <div class="tl-content">🛍️ 买特产伴手礼（蓝莓干、打糕、人参制品）</div>
+          <div class="tl-note">⚠️ 景区外正规店买，别在景区内买！出租车推荐的也别信！</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-time">下午/傍晚</div>
+          <div class="tl-content">🚄 前往长白山站，乘高铁返回沈阳</div>
+          <div class="tl-note">💡 提前在12306买好返程票，建议买下午3-6点的车次</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION: ATTRACTIONS ===== -->
+<div class="section-title" id="sec-attractions">
+  <span class="title-icon">🏔️</span> 北坡核心景点
+</div>
+
+<div class="card-grid">
+  <div class="info-card">
+    <span class="card-emoji">🌊</span>
+    <div class="card-title">天池</div>
+    <div class="card-desc">海拔2189m，世界最高火山湖。A线陡B线平，上午去！</div>
+  </div>
+  <div class="info-card">
+    <span class="card-emoji">💧</span>
+    <div class="card-title">长白瀑布</div>
+    <div class="card-desc">落差68米，天池唯一出水口，栈道步行20分钟</div>
+  </div>
+  <div class="info-card">
+    <span class="card-emoji">♨️</span>
+    <div class="card-title">聚龙温泉群</div>
+    <div class="card-desc">水温83℃！温泉蛋10元/3个，蛋白流心蛋黄凝固</div>
+  </div>
+  <div class="info-card">
+    <span class="card-emoji">💚</span>
+    <div class="card-title">绿渊潭</div>
+    <div class="card-desc">潭水碧绿如翡翠，拍照仙境，雨中更美</div>
+  </div>
+  <div class="info-card">
+    <span class="card-emoji">🌲</span>
+    <div class="card-title">地下森林</div>
+    <div class="card-desc">火山谷底原始森林，木栈道30分钟，天然氧吧</div>
+  </div>
+</div>
+
+<!-- ===== SECTION: FOOD ===== -->
+<div class="section-title" id="sec-food">
+  <span class="title-icon">🍜</span> 美食地图
+</div>
+
+<div class="list-section">
+  <div class="list-item">
+    <span class="item-emoji">🥚</span>
+    <div class="item-info">
+      <div class="item-name">聚龙温泉煮鸡蛋</div>
+      <div class="item-meta">📍 北坡景区中转站 · ⭐ 必吃</div>
+      <div class="item-dish">温泉蛋 · 蛋白嫩滑如豆花，蛋黄凝固流心</div>
+    </div>
+    <div class="item-price">¥10/3个</div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🥩</span>
+    <div class="item-info">
+      <div class="item-name">星辰岩石烧烤</div>
+      <div class="item-meta">📍 二道白河镇 · ⭐ 安图风味榜No.1</div>
+      <div class="item-dish">小肋排 · 五花肉炒酸菜 · 黄牛肉</div>
+    </div>
+    <div class="item-price">~¥90/人</div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🍲</span>
+    <div class="item-info">
+      <div class="item-name">福记东北人家铁锅炖</div>
+      <div class="item-meta">📍 二道白河镇 · 🎭 有二人转表演</div>
+      <div class="item-dish">铁锅炖大鹅 · 排骨锅 · 贴玉米饼子</div>
+    </div>
+    <div class="item-price">~¥104/人</div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🥘</span>
+    <div class="item-info">
+      <div class="item-name">松栢朝鲜族味道·脊骨汤</div>
+      <div class="item-meta">📍 二道白河镇 · 🔥 2025新晋热门</div>
+      <div class="item-dish">脊骨土豆汤 · 火辣鸡爪 · 烤鳕鱼</div>
+    </div>
+    <div class="item-price">~¥50/人</div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🐟</span>
+    <div class="item-info">
+      <div class="item-name">味特鲜鱼馆</div>
+      <div class="item-meta">📍 二道白河镇 · 🕰️ 35年老店</div>
+      <div class="item-dish">冷水鱼一鱼三吃 · 林蛙炖土豆 · 柳根鱼</div>
+    </div>
+    <div class="item-price">~¥80/人</div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🍜</span>
+    <div class="item-info">
+      <div class="item-name">服务大楼冷面</div>
+      <div class="item-meta">📍 二道白河镇 · 🧊 夏日必吃</div>
+      <div class="item-dish">朝鲜族冷面 · 冰碴子汤底，酸甜爽口</div>
+    </div>
+    <div class="item-price">¥25/碗</div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🥟</span>
+    <div class="item-info">
+      <div class="item-name">小黄牛朝鲜族汤饭馆</div>
+      <div class="item-meta">📍 二道白河镇 · ⭐ 门庭若市</div>
+      <div class="item-dish">韩式牛排锅 · 首尔辣猪蹄 · 牛肉汤饭</div>
+    </div>
+    <div class="item-price">~¥57/人</div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🍗</span>
+    <div class="item-info">
+      <div class="item-name">金顺朝鲜族汤饭馆</div>
+      <div class="item-meta">📍 二道白河镇 · 🔥 2025新晋热门</div>
+      <div class="item-dish">参鸡汤 · 火辣鸡爪 · 红烧明太鱼</div>
+    </div>
+    <div class="item-price">~¥60/人</div>
+  </div>
+</div>
+
+<!-- ===== SECTION: RESTAURANT ROULETTE ===== -->
+<div class="section-title" id="sec-roulette">
+  <span class="title-icon">🎲</span> 今天吃啥？
+  <span class="title-badge">趣味</span>
+</div>
+
+<div class="roulette-wrap">
+  <div class="roulette-emoji" id="rouletteEmoji">🍽️</div>
+  <div class="roulette-display" id="rouletteDisplay">点下面的按钮摇一个！</div>
+  <button class="roulette-btn" onclick="spinRoulette()">🎰 摇骰子选餐厅</button>
+  <div class="roulette-history" id="rouletteHistory"></div>
+</div>
+
+<!-- ===== SECTION: ACHIEVEMENTS ===== -->
+<div class="section-title" id="sec-achievements">
+  <span class="title-icon">🏆</span> 旅行成就
+  <span class="title-badge">游戏</span>
+</div>
+
+<div class="achievements">
+  <div class="ach-grid" id="achGrid"></div>
+</div>
+
+<!-- ===== SECTION: STAY ===== -->
+<div class="section-title" id="sec-stay">
+  <span class="title-icon">🏨</span> 住宿推荐
+</div>
+
+<div class="list-section">
+  <div class="list-item" style="border-left: 3px solid #e8a850;">
+    <span class="item-emoji">♨️</span>
+    <div class="item-info">
+      <div class="item-name">花筑·岳璟汤泉民宿 <span class="tag tag-orange">情侣首选</span></div>
+      <div class="item-meta">📍 北坡集散中心附近 · ⭐ 4.7分 · 2025新开业</div>
+      <div class="item-dish">🔥 每间房有独立室外私汤池！24小时可泡，夜晚观星。木屋私汤大床房</div>
+    </div>
+    <div class="item-price">~¥400-600</div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🏨</span>
+    <div class="item-info">
+      <div class="item-name">季枫国际温泉酒店</div>
+      <div class="item-meta">📍 火车站斜对面 · ⭐ 2024新开业 · 高档型</div>
+      <div class="item-dish">康养温泉 · 全智能化 · 可观长白山远景 · 免费接送站</div>
+    </div>
+    <div class="item-price">~¥300-500</div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🏠</span>
+    <div class="item-info">
+      <div class="item-name">煌庭国际温泉酒店</div>
+      <div class="item-meta">📍 近高铁站 · ⭐ 8.9分 · 四星级</div>
+      <div class="item-dish">室内温泉 · 部分房型带私汤 · 全屋智控 · 零压床垫</div>
+    </div>
+    <div class="item-price">~¥300-450</div>
+  </div>
+  <div class="list-item">
+    <span class="item-emoji">🏡</span>
+    <div class="item-info">
+      <div class="item-name">长白山田园宾馆</div>
+      <div class="item-meta">📍 集散中心步行100米 · 经济型</div>
+      <div class="item-dish">位置绝佳 · 附近有东沃温泉可单独泡 · 吃饭购物方便</div>
+    </div>
+    <div class="item-price">~¥150-250</div>
+  </div>
+</div>
+
+<!-- ===== SECTION: ALTERNATIVE PLANS ===== -->
+<div class="section-title" id="sec-alternative">
+  <span class="title-icon">🔄</span> 灵活备选方案
+</div>
+
+<div class="alt-plans">
+  <div class="plan-tabs">
+    <div class="plan-tab active" onclick="switchPlan('plan-a', this)">☀️ 天池开放</div>
+    <div class="plan-tab" onclick="switchPlan('plan-b', this)">🌧️ 天池关闭</div>
+    <div class="plan-tab" onclick="switchPlan('plan-c', this)">🌤️ 半天开放</div>
+  </div>
+  <div class="plan-content active" id="plan-a">
+    <div class="plan-card">
+      <strong>☀️ 最佳情况：天池正常开放</strong><br>
+      按照 Day2 行程正常进行，入园直奔天池！<br>
+      上午8-10点是黄金窗口，光线最好、云雾最少。<br>
+      下午依次游览瀑布→温泉→绿渊潭→地下森林。<br>
+      晚上铁锅炖庆祝 + 泡温泉放松 🎉
+    </div>
+  </div>
+  <div class="plan-content" id="plan-b">
+    <div class="plan-card">
+      <strong>🌧️ 天池全天关闭</strong><br>
+      不要灰心！北坡还有很多好玩的地方：<br>
+      • 上午：长白瀑布 + 聚龙温泉群 + 绿渊潭<br>
+      • 中午：景区内午餐（温泉蛋必吃）<br>
+      • 下午：地下森林深度徒步 + 二道白河镇美人松公园<br>
+      • 傍晚：<strong>果断决定第二天（Day3）再冲一次天池！</strong><br>
+      • 晚上：泡温泉 + 烧烤大餐<br>
+      📌 如果两天都关了 → 那就留个念想，下次再来！
+    </div>
+  </div>
+  <div class="plan-content" id="plan-c">
+    <div class="plan-card">
+      <strong>🌤️ 天池上午关闭、下午可能开放</strong><br>
+      • 上午先去其他景点：瀑布→温泉→绿渊潭→地下森林<br>
+      • 随时刷新公众号查看天池开放动态<br>
+      • 一旦开放，立刻坐倒站车上天池！<br>
+      • 如果下午2点还没开 → 按"全天关闭"方案执行<br>
+      📌 住2晚的理由——多一次冲顶机会！
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION: PACKING CHECKLIST ===== -->
+<div class="section-title" id="sec-packing">
+  <span class="title-icon">🎒</span> 出行清单
+</div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-outer">
+    <div class="progress-bar-inner" id="packProgress" style="width: 0%"></div>
+  </div>
+  <div class="progress-text" id="packProgressText">0 / 20 项已打包</div>
+</div>
+
+<div class="checklist" id="checklist"></div>
+
+<!-- ===== SECTION: BUDGET ===== -->
+<div class="section-title" id="sec-budget">
+  <span class="title-icon">💰</span> 预算计算器
+  <span class="title-badge">可调节</span>
+</div>
+
+<div class="budget-section">
+  <div class="budget-table" id="budgetTable"></div>
+  <div class="budget-bar" id="budgetBar"></div>
+  <div class="budget-legend" id="budgetLegend"></div>
+</div>
+
+<!-- ===== SECTION: TIPS ===== -->
+<div class="section-title" id="sec-tips">
+  <span class="title-icon">⚠️</span> 避坑指南
+</div>
+
+<div class="tips-list">
+  <div class="tip-item"><span class="tip-num">1</span><div><strong>不查天气就去</strong> — 出发前晚关注「长白山发布」公众号，雨天/雾天关闭率80%+</div></div>
+  <div class="tip-item"><span class="tip-num">2</span><div><strong>下午才上山</strong> — 上午7-10点能见率高，下午易起雾天池"隐身"，务必早起！</div></div>
+  <div class="tip-item"><span class="tip-num">3</span><div><strong>穿短袖上山</strong> — 山顶常年大风，6月仍有残雪！必带冲锋衣/薄羽绒服</div></div>
+  <div class="tip-item"><span class="tip-num">4</span><div><strong>不先上天池</strong> — 入园后必须直奔天池！天池可能随时因天气关闭</div></div>
+  <div class="tip-item"><span class="tip-num">5</span><div><strong>带雨伞上山</strong> — 山顶风大，雨伞秒变"降落伞"！只带一次性雨衣</div></div>
+  <div class="tip-item"><span class="tip-num">6</span><div><strong>飞无人机</strong> — 长白山是边境禁区！罚款5000元起，切记别带！</div></div>
+  <div class="tip-item"><span class="tip-num">7</span><div><strong>景区乱买特产</strong> — 人参、鹿茸去正规药店买。出租车推荐的千万别信！</div></div>
+  <div class="tip-item"><span class="tip-num">8</span><div><strong>不提前买票</strong> — 旺季当天基本买不到！提前1-15天在官方小程序购票</div></div>
+</div>
+
+<!-- ===== FAB ===== -->
+<button class="fab" id="fab" onclick="toggleFab()">⚡</button>
+<div class="fab-menu" id="fabMenu">
+  <div class="fab-menu-item" onclick="scrollToSection('sec-wizard');toggleFab();">
+    <span class="fmi-label">决策向导</span>
+    <button class="fmi-btn">🧭</button>
+  </div>
+  <div class="fab-menu-item" onclick="scrollToSection('sec-roulette');toggleFab();">
+    <span class="fmi-label">吃啥摇骰子</span>
+    <button class="fmi-btn">🎲</button>
+  </div>
+  <div class="fab-menu-item" onclick="scrollToSection('sec-tickets');toggleFab();">
+    <span class="fmi-label">快速购票</span>
+    <button class="fmi-btn">🎫</button>
+  </div>
+  <div class="fab-menu-item" onclick="window.scrollTo({top:0,behavior:'smooth'});toggleFab();">
+    <span class="fmi-label">回到顶部</span>
+    <button class="fmi-btn">⬆️</button>
+  </div>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="bottom-nav">
+  <button class="nav-item active" onclick="scrollToSection('sec-wizard', this)"><span class="nav-icon">🧭</span>向导</button>
+  <button class="nav-item" onclick="scrollToSection('sec-itinerary', this)"><span class="nav-icon">📋</span>行程</button>
+  <button class="nav-item" onclick="scrollToSection('sec-food', this)"><span class="nav-icon">🍜</span>美食</button>
+  <button class="nav-item" onclick="scrollToSection('sec-stay', this)"><span class="nav-icon">🏨</span>住宿</button>
+  <button class="nav-item" onclick="scrollToSection('sec-packing', this)"><span class="nav-icon">🎒</span>清单</button>
+  <button class="nav-item" onclick="scrollToSection('sec-budget', this)"><span class="nav-icon">💰</span>预算</button>
+</nav>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-icon" id="modalIcon">🎉</div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-text" id="modalText"></div>
+    <button class="modal-close" onclick="closeModal()">知道了</button>
+  </div>
+</div>
+
+<script>
+// ===== WEATHER API =====
+const WEATHER_API = 'https://api.open-meteo.com/v1/forecast?latitude=42.03&longitude=128.08&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_gusts_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia/Shanghai&forecast_days=3';
+
+const WMO_CODES = {
+  0: { icon: '☀️', text: '晴天' },
+  1: { icon: '🌤️', text: '大部晴' },
+  2: { icon: '⛅', text: '多云' },
+  3: { icon: '☁️', text: '阴天' },
+  45: { icon: '🌫️', text: '雾' },
+  48: { icon: '🌫️', text: '雾凇' },
+  51: { icon: '🌦️', text: '小毛毛雨' },
+  53: { icon: '🌦️', text: '毛毛雨' },
+  55: { icon: '🌦️', text: '大毛毛雨' },
+  61: { icon: '🌧️', text: '小雨' },
+  63: { icon: '🌧️', text: '中雨' },
+  65: { icon: '🌧️', text: '大雨' },
+  71: { icon: '🌨️', text: '小雪' },
+  73: { icon: '🌨️', text: '中雪' },
+  75: { icon: '❄️', text: '大雪' },
+  77: { icon: '❄️', text: '雪粒' },
+  80: { icon: '🌧️', text: '阵雨' },
+  81: { icon: '🌧️', text: '中阵雨' },
+  82: { icon: '⛈️', text: '强阵雨' },
+  85: { icon: '🌨️', text: '小阵雪' },
+  86: { icon: '❄️', text: '大阵雪' },
+  95: { icon: '⛈️', text: '雷暴' },
+  96: { icon: '⛈️', text: '冰雹雷暴' },
+  99: { icon: '⛈️', text: '强冰雹雷暴' },
+};
+
+async function fetchWeather() {
+  const loading = document.getElementById('weatherLoading');
+  const content = document.getElementById('weatherContent');
+  const error = document.getElementById('weatherError');
+  const update = document.getElementById('weatherUpdate');
+
+  try {
+    const resp = await fetch(WEATHER_API);
+    if (!resp.ok) throw new Error('API error');
+    const data = await resp.json();
+
+    const now = new Date();
+    update.textContent = `更新于 ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+
+    // Current weather
+    const cur = data.current;
+    const w = WMO_CODES[cur.weather_code] || { icon: '🌤️', text: '未知' };
+
+    const windLevel = cur.wind_speed_10m >= 17 ? '⚠️ 大风（天池可能关闭）' :
+                      cur.wind_speed_10m >= 10 ? '💨 风较大' : '✅ 风力正常';
+
+    content.innerHTML = `
+      <div class="weather-now">
+        <span class="wn-icon">${w.icon}</span>
+        <div>
+          <span class="wn-temp">${Math.round(cur.temperature_2m)}°C</span>
+          <span style="font-size:14px;color:var(--text-light);">${w.text}</span>
+        </div>
+        <div class="wn-detail">
+          体感 ${Math.round(cur.apparent_temperature)}°C<br>
+          💧 湿度 ${cur.relative_humidity_2m}%<br>
+          🌬️ 风速 ${cur.wind_speed_10m} m/s
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--text-light);margin-bottom:8px;">${windLevel}</div>
+      <div class="weather-forecast" id="weatherForecast"></div>
+    `;
+
+    // Daily forecast
+    const fcDiv = document.getElementById('weatherForecast');
+    const weekdays = ['周日','周一','周二','周三','周四','周五','周六'];
+    const today = new Date();
+
+    for (let i = 0; i < Math.min(3, data.daily.time.length); i++) {
+      const d = new Date(data.daily.time[i]);
+      const dayLabel = i === 0 ? '今天' : i === 1 ? '明天' : i === 2 ? '后天' : weekdays[d.getDay()];
+      const wCode = data.daily.weather_code[i];
+      const wInfo = WMO_CODES[wCode] || { icon: '🌤️', text: '未知' };
+      const rainProb = data.daily.precipitation_probability_max[i] || 0;
+
+      fcDiv.innerHTML += `
+        <div class="wf-day${i === 0 ? ' today' : ''}">
+          <div class="wf-date">${dayLabel}</div>
+          <div class="wf-date" style="font-size:10px;color:var(--text-light);">${(d.getMonth()+1)}/${d.getDate()}</div>
+          <div class="wf-icon">${wInfo.icon}</div>
+          <div class="wf-temp">${Math.round(data.daily.temperature_2m_max[i])}°</div>
+          <div class="wf-low">${Math.round(data.daily.temperature_2m_min[i])}°</div>
+          ${rainProb > 0 ? `<div class="wf-rain">🌧️ ${rainProb}%</div>` : ''}
+        </div>
+      `;
+    }
+
+    loading.style.display = 'none';
+    content.style.display = 'block';
+    error.style.display = 'none';
+
+  } catch(e) {
+    loading.style.display = 'none';
+    content.style.display = 'none';
+    error.style.display = 'block';
+    update.textContent = '获取失败';
+    console.error('Weather fetch error:', e);
+  }
+}
+
+// ===== COUNTDOWN =====
+function updateCountdown() {
+  const now = new Date();
+  const depart = new Date('2026-06-26T19:01:00');
+  const arrive = new Date('2026-06-26T21:04:00');
+  const diff = depart - now;
+
+  const cd = document.getElementById('countdown');
+  if (diff < 0 && now < arrive) {
+    cd.innerHTML = '🚄 <strong>正在高铁上！</strong>即将抵达长白山站';
+  } else if (now >= arrive && now < new Date('2026-06-28T23:59:59')) {
+    cd.innerHTML = '🏔️ <strong>已抵达长白山！</strong>祝旅途愉快~';
+  } else if (diff > 0) {
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    cd.innerHTML = `⏳ 距出发还有 <strong>${days}天${hours}小时${mins}分</strong>`;
+  } else {
+    cd.innerHTML = '✨ 旅途已结束，期待下次旅行！';
+  }
+}
+
+// ===== DECISION WIZARD =====
+let wizardState = {};
+
+function wizardAnswer(step, answer) {
+  wizardState[step] = answer;
+  const body = document.getElementById('wizardBody');
+
+  if (step === 'weather') {
+    // Update step dots
+    document.getElementById('ws1').classList.add('done');
+    document.getElementById('ws2').classList.add('active');
+
+    body.innerHTML = `
+      <h3>🏔️ 天池开放状态？</h3>
+      <p style="font-size:13px;color:var(--text-light);margin-bottom:14px;">请查看「长白山」微信公众号确认</p>
+      <div class="wizard-options">
+        <button class="wizard-btn" onclick="wizardAnswer('tianchi','open')">
+          <span class="wb-icon">✅</span>
+          <span><span class="wb-label">天池开放</span><span class="wb-desc">正常开放，可以上山</span></span>
+        </button>
+        <button class="wizard-btn" onclick="wizardAnswer('tianchi','closed')">
+          <span class="wb-icon">❌</span>
+          <span><span class="wb-label">天池关闭</span><span class="wb-desc">因天气原因临时关闭</span></span>
+        </button>
+        <button class="wizard-btn" onclick="wizardAnswer('tianchi','half')">
+          <span class="wb-icon">⏳</span>
+          <span><span class="wb-label">暂未通知</span><span class="wb-desc">还没看到开放/关闭的通知</span></span>
+        </button>
+      </div>
+    `;
+  } else if (step === 'tianchi') {
+    document.getElementById('ws2').classList.add('done');
+    document.getElementById('ws3').classList.add('active');
+
+    let resultIcon, resultPlan, resultDetail;
+
+    if (answer === 'open') {
+      resultIcon = '☀️';
+      resultPlan = '🏔️ 冲！执行Day2主方案';
+      resultDetail = '天池开放+天气允许 → <strong>入园直奔天池！</strong><br>上午8-10点黄金窗口<br>依次：天池→瀑布→温泉→绿渊潭→地下森林<br>晚上铁锅炖庆祝！🎉';
+    } else if (answer === 'closed') {
+      resultIcon = '🔄';
+      resultPlan = '📋 启动备选方案B';
+      resultDetail = '天池关闭 → <strong>不要灰心！</strong><br>上午：瀑布+温泉群+绿渊潭<br>下午：地下森林深度游<br>第二天（Day3）再冲一次天池！<br>晚上泡温泉放松 ♨️';
+    } else {
+      resultIcon = '🤔';
+      resultPlan = '📱 随时关注，灵活调整';
+      resultDetail = '建议：<strong>先到景区再说！</strong><br>上午先去瀑布+温泉+绿渊潭<br>随时刷新公众号看天池动态<br>一旦开放立刻坐倒站车上山！';
+    }
+
+    body.innerHTML = `
+      <div class="wizard-result">
+        <div class="wr-icon">${resultIcon}</div>
+        <div class="wr-plan">${resultPlan}</div>
+        <div class="wr-detail">${resultDetail}</div>
+        <button class="wizard-reset" onclick="resetWizard()">🔄 重新决策</button>
+      </div>
+    `;
+
+    // Unlock achievement
+    unlockAchievement('wizard');
+  }
+}
+
+function resetWizard() {
+  wizardState = {};
+  document.getElementById('ws1').classList.remove('done','active');
+  document.getElementById('ws2').classList.remove('done','active');
+  document.getElementById('ws3').classList.remove('done','active');
+  document.getElementById('ws1').classList.add('active');
+  document.getElementById('wizardBody').innerHTML = `
+    <h3>🤔 今天该怎么玩？</h3>
+    <p style="font-size:13px;color:var(--text-light);margin-bottom:14px;">回答几个简单问题，帮你自动匹配最佳方案</p>
+    <div class="wizard-options">
+      <button class="wizard-btn" onclick="wizardAnswer('weather','good')">
+        <span class="wb-icon">☀️</span>
+        <span><span class="wb-label">天气不错</span><span class="wb-desc">晴/多云，适合上山</span></span>
+      </button>
+      <button class="wizard-btn" onclick="wizardAnswer('weather','bad')">
+        <span class="wb-icon">🌧️</span>
+        <span><span class="wb-label">天气不好</span><span class="wb-desc">下雨/大风/大雾</span></span>
+      </button>
+      <button class="wizard-btn" onclick="wizardAnswer('weather','unknown')">
+        <span class="wb-icon">🤷</span>
+        <span><span class="wb-label">还不确定</span><span class="wb-desc">先看看其他选项</span></span>
+      </button>
+    </div>
+  `;
+}
+// Init wizard step 1
+document.getElementById('ws1').classList.add('active');
+
+// ===== RESTAURANT ROULETTE =====
+const restaurants = [
+  { name: '星辰岩石烧烤', emoji: '🥩', detail: '安图风味榜No.1 · ~¥90/人', tag: '烧烤' },
+  { name: '福记东北人家铁锅炖', emoji: '🍲', detail: '有二人转表演 · ~¥104/人', tag: '铁锅炖' },
+  { name: '松栢朝鲜族脊骨汤', emoji: '🥘', detail: '2025新晋热门 · ~¥50/人', tag: '韩式' },
+  { name: '味特鲜鱼馆', emoji: '🐟', detail: '35年老店 · ~¥80/人', tag: '鱼鲜' },
+  { name: '小黄牛朝鲜族汤饭馆', emoji: '🥟', detail: '牛肉汤饭一绝 · ~¥57/人', tag: '汤饭' },
+  { name: '金顺朝鲜族汤饭馆', emoji: '🍗', detail: '参鸡汤 · ~¥60/人', tag: '韩式' },
+  { name: '服务大楼冷面', emoji: '🍜', detail: '冰碴子冷面 · ¥25/碗', tag: '冷面' },
+  { name: '星期天火山石烤肉', emoji: '🔥', detail: '火山岩烤盘 · ~¥104/人', tag: '烧烤' },
+];
+
+function spinRoulette() {
+  const display = document.getElementById('rouletteDisplay');
+  const emoji = document.getElementById('rouletteEmoji');
+  const history = document.getElementById('rouletteHistory');
+  const btn = document.querySelector('.roulette-btn');
+
+  btn.disabled = true;
+  btn.textContent = '🎰 旋转中...';
+  display.classList.add('spinning');
+
+  let count = 0;
+  const maxCount = 15;
+  let interval = 80;
+
+  function tick() {
+    const r = restaurants[Math.floor(Math.random() * restaurants.length)];
+    emoji.textContent = r.emoji;
+    display.textContent = r.name;
+    count++;
+    if (count < maxCount) {
+      interval += 20;
+      setTimeout(tick, interval);
+    } else {
+      // Final pick
+      const final = restaurants[Math.floor(Math.random() * restaurants.length)];
+      emoji.textContent = final.emoji;
+      display.textContent = final.name;
+      display.classList.remove('spinning');
+      btn.disabled = false;
+      btn.textContent = '🎰 再摇一次';
+
+      const now = new Date();
+      const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+      const entry = `<div style="margin-top:4px;">🕐 ${timeStr} → ${final.emoji} ${final.name} <span class="tag tag-green">${final.tag}</span></div>`;
+      history.innerHTML = entry + history.innerHTML;
+
+      if (history.children.length > 5) history.removeChild(history.lastChild);
+      showToast(`🎉 今天吃：${final.name}！`);
+
+      // Unlock achievement
+      unlockAchievement('roulette');
+    }
+  }
+
+  setTimeout(tick, 100);
+}
+
+// ===== ACHIEVEMENTS =====
+const achievementDefs = [
+  { id: 'wizard', icon: '🧭', name: '决策大师', desc: '使用决策向导获得方案', hint: '试试决策向导' },
+  { id: 'roulette', icon: '🎲', name: '选择困难终结者', desc: '用摇骰子选了一家餐厅', hint: '摇一次餐厅骰子' },
+  { id: 'packed', icon: '🎒', name: '打包达人', desc: '勾选了全部出行清单', hint: '完成所有打包项' },
+  { id: 'budget', icon: '💰', name: '精打细算', desc: '调整了预算计算器', hint: '试试调节预算滑块' },
+  { id: 'plan', icon: '🔄', name: '预案专家', desc: '查看了全部3种备选方案', hint: '切换备选方案tab' },
+  { id: 'explorer', icon: '🔍', name: '攻略通读', desc: '浏览了所有板块', hint: '滚动浏览全部内容' },
+];
+
+function getAchievements() {
+  try { return JSON.parse(localStorage.getItem('cbs_achievements') || '{}'); }
+  catch(e) { return {}; }
+}
+
+function unlockAchievement(id) {
+  const ach = getAchievements();
+  if (ach[id]) return;
+  ach[id] = new Date().toISOString();
+  localStorage.setItem('cbs_achievements', JSON.stringify(ach));
+  renderAchievements();
+
+  const def = achievementDefs.find(a => a.id === id);
+  if (def) {
+    document.getElementById('modalIcon').textContent = def.icon;
+    document.getElementById('modalTitle').textContent = `🏆 解锁成就：${def.name}`;
+    document.getElementById('modalText').textContent = def.desc;
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function renderAchievements() {
+  const ach = getAchievements();
+  const grid = document.getElementById('achGrid');
+  grid.innerHTML = achievementDefs.map(a => {
+    const unlocked = !!ach[a.id];
+    return `
+      <div class="ach-card ${unlocked ? 'unlocked' : 'locked'}">
+        <span class="ach-icon">${unlocked ? a.icon : '🔒'}</span>
+        <div class="ach-name">${a.name}</div>
+        <div class="ach-desc">${unlocked ? a.desc : a.hint}</div>
+        ${unlocked ? '<span class="ach-badge">✅ 已解锁</span>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// Track scrolled sections for "explorer" achievement
+let viewedSections = new Set();
+const achievementObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      viewedSections.add(entry.target.id);
+      if (viewedSections.size >= 5) unlockAchievement('explorer');
+    }
+  });
+}, { threshold: 0.3 });
+
+// ===== BUDGET CALCULATOR =====
+const budgetItems = [
+  { id: 'tickets', label: '🎫 门票+景区车', defaultVal: 305, min: 305, max: 400, step: 5, fixed: true },
+  { id: 'stay', label: '🏨 住宿（2晚）', defaultVal: 600, min: 300, max: 1200, step: 50 },
+  { id: 'food', label: '🍜 餐饮（3天）', defaultVal: 400, min: 200, max: 800, step: 25 },
+  { id: 'transport', label: '🚕 当地交通', defaultVal: 80, min: 40, max: 200, step: 10 },
+  { id: 'other', label: '🎁 特产/其他', defaultVal: 150, min: 0, max: 500, step: 25 },
+];
+
+function getBudget() {
+  try { return JSON.parse(localStorage.getItem('cbs_budget') || 'null'); }
+  catch(e) { return null; }
+}
+function saveBudget(obj) {
+  localStorage.setItem('cbs_budget', JSON.stringify(obj));
+}
+
+function renderBudget() {
+  let saved = getBudget() || {};
+  const table = document.getElementById('budgetTable');
+
+  // Build rows
+  let html = '';
+  budgetItems.forEach(item => {
+    const val = saved[item.id] || item.defaultVal;
+    html += `
+      <div class="budget-row">
+        <span class="br-label">${item.label}</span>
+        <div class="br-custom">
+          <input type="range" min="${item.min}" max="${item.max}" step="${item.step}" value="${val}"
+            oninput="updateBudget('${item.id}', parseInt(this.value))"
+            style="width:60px;">
+          <span class="br-price">¥${val}</span>
+        </div>
+      </div>
+    `;
+  });
+
+  // Total
+  const total = budgetItems.reduce((sum, item) => sum + (saved[item.id] || item.defaultVal), 0);
+  html += `
+    <div class="budget-row total">
+      <span class="br-label">📊 合计（人均）</span>
+      <span class="br-price">¥${total}</span>
+    </div>
+  `;
+
+  table.innerHTML = html;
+
+  // Bar chart
+  const bar = document.getElementById('budgetBar');
+  const legend = document.getElementById('budgetLegend');
+  const colors = ['tickets','stay','food','transport','other'];
+  bar.innerHTML = '';
+  legend.innerHTML = '';
+
+  budgetItems.forEach((item, i) => {
+    const val = saved[item.id] || item.defaultVal;
+    const pct = total > 0 ? Math.round(val / total * 100) : 0;
+    bar.innerHTML += `<div class="budget-bar-seg ${colors[i]}" style="width:${pct}%"></div>`;
+    legend.innerHTML += `<span><span class="dot ${colors[i]}"></span>${item.label.split(' ')[1]} ¥${val}</span>`;
+  });
+}
+
+function updateBudget(id, val) {
+  const saved = getBudget() || {};
+  saved[id] = val;
+  saveBudget(saved);
+  renderBudget();
+  unlockAchievement('budget');
+}
+
+// ===== CHECKLIST =====
+const checklistItems = [
+  { cat: '👕 衣物', items: [
+    { text: '冲锋衣或薄羽绒服', note: '山顶必备！温差大' },
+    { text: '速干短袖 ×2', note: '山脚穿，吸汗透气' },
+    { text: '长裤（速干/冲锋裤）', note: '防蚊虫刮擦' },
+    { text: '抓绒衣或薄毛衣', note: '中层保暖' },
+    { text: '舒适防滑运动鞋', note: '火山岩路段防滑' },
+  ]},
+  { cat: '🎒 装备', items: [
+    { text: '一次性雨衣', note: '山顶禁带雨伞！' },
+    { text: '保温杯', note: '山顶无热水，装热水上山' },
+    { text: '充电宝', note: '拍照多，手机容易没电' },
+    { text: '暖宝宝 5-10片', note: '贴腰/腿/手机防低温关机' },
+    { text: '氧气瓶', note: '山下买20元/瓶，备用' },
+  ]},
+  { cat: '🧴 防护', items: [
+    { text: '防晒霜 SPF50+', note: '海拔高紫外线极强' },
+    { text: '太阳镜', note: '防紫外线+拍照好看' },
+    { text: '宽檐帽或冰袖', note: '防晒必备' },
+    { text: '驱蚊液', note: '森林区蚊虫多' },
+  ]},
+  { cat: '📱 出行', items: [
+    { text: '身份证', note: '入园/入住必需' },
+    { text: '提前买好门票', note: '「长白山旅游集团」小程序' },
+    { text: '下载离线地图', note: '山区信号不稳定' },
+    { text: '少量现金', note: '早市小摊可能用得上' },
+    { text: '零食+水', note: '景区内餐饮选择有限' },
+    { text: '返程高铁票', note: '提前在12306买好！' },
+  ]},
+];
+
+function renderChecklist() {
+  const el = document.getElementById('checklist');
+  el.innerHTML = '';
+  let totalItems = 0;
+  checklistItems.forEach(cat => {
+    const catTitle = document.createElement('div');
+    catTitle.className = 'checklist-cat';
+    catTitle.textContent = cat.cat;
+    el.appendChild(catTitle);
+
+    cat.items.forEach((item, idx) => {
+      const id = 'ci_' + totalItems;
+      totalItems++;
+      const div = document.createElement('div');
+      div.className = 'check-item';
+      div.id = id;
+      div.onclick = () => toggleCheck(id);
+      div.innerHTML = `
+        <div class="check-box">✓</div>
+        <span class="ci-text">${item.text}</span>
+        <span class="ci-note">${item.note}</span>
+      `;
+      el.appendChild(div);
+    });
+  });
+  window._totalCheckItems = totalItems;
+  updateCheckUI();
+}
+
+function getChecked() {
+  try { return JSON.parse(localStorage.getItem('cbs_checklist') || '{}'); }
+  catch(e) { return {}; }
+}
+function saveChecked(obj) { localStorage.setItem('cbs_checklist', JSON.stringify(obj)); }
+
+function toggleCheck(id) {
+  const checked = getChecked();
+  checked[id] = !checked[id];
+  saveChecked(checked);
+  updateCheckUI();
+
+  // Check if all packed
+  const allChecked = Object.values(checked).filter(Boolean).length >= (window._totalCheckItems || 20);
+  if (allChecked) unlockAchievement('packed');
+}
+
+function updateCheckUI() {
+  const checked = getChecked();
+  let count = 0;
+  document.querySelectorAll('.check-item').forEach(el => {
+    if (checked[el.id]) { el.classList.add('checked'); count++; }
+    else { el.classList.remove('checked'); }
+  });
+  const total = window._totalCheckItems || 20;
+  const pct = Math.round(count / total * 100);
+  document.getElementById('packProgress').style.width = pct + '%';
+  document.getElementById('packProgressText').textContent = `${count} / ${total} 项已打包`;
+}
+
+// ===== ACCORDION =====
+function toggleDay(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ===== PLAN SWITCHER =====
+function switchPlan(id, el) {
+  document.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.plan-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+
+  // Track for achievement
+  if (!window._plansViewed) window._plansViewed = new Set();
+  window._plansViewed.add(id);
+  if (window._plansViewed.size >= 3) unlockAchievement('plan');
+}
+
+// ===== FAB =====
+function toggleFab() {
+  document.getElementById('fab').classList.toggle('open');
+  document.getElementById('fabMenu').classList.toggle('open');
+}
+
+// Close FAB menu when clicking elsewhere
+document.addEventListener('click', function(e) {
+  const fab = document.getElementById('fab');
+  const menu = document.getElementById('fabMenu');
+  if (!fab.contains(e.target) && !menu.contains(e.target) && menu.classList.contains('open')) {
+    fab.classList.remove('open');
+    menu.classList.remove('open');
+  }
+});
+
+// ===== BOTTOM NAV =====
+function scrollToSection(secId, navEl) {
+  const el = document.getElementById(secId);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ===== SNOW PARTICLES =====
+function createSnowflakes() {
+  const container = document.getElementById('snowflakes');
+  const flakes = ['❄','❅','❆','✦','•'];
+  for (let i = 0; i < 15; i++) {
+    const span = document.createElement('span');
+    span.className = 'snowflake';
+    span.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+    span.style.left = Math.random() * 100 + '%';
+    span.style.animationDuration = (Math.random() * 6 + 6) + 's';
+    span.style.animationDelay = Math.random() * 5 + 's';
+    span.style.fontSize = (Math.random() * 10 + 8) + 'px';
+    container.appendChild(span);
+  }
+}
+
+// ===== SCROLL SPY =====
+const navSections = ['sec-wizard','sec-itinerary','sec-food','sec-stay','sec-packing','sec-budget'];
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.nav-item').forEach(n => {
+        const btnText = n.textContent.trim();
+        const secMap = {
+          'sec-wizard': '向导', 'sec-itinerary': '行程', 'sec-food': '美食',
+          'sec-stay': '住宿', 'sec-packing': '清单', 'sec-budget': '预算'
+        };
+        n.classList.toggle('active', btnText === (secMap[entry.target.id] || ''));
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+// ===== INIT =====
+function init() {
+  fetchWeather();
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+  renderChecklist();
+  renderBudget();
+  renderAchievements();
+  createSnowflakes();
+
+  // Observe sections for achievements
+  navSections.concat(['sec-attractions','sec-alternative','sec-tips','sec-roulette','sec-achievements','sec-tickets']).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) achievementObserver.observe(el);
+  });
+
+  // Observe for nav scroll spy
+  navSections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) scrollObserver.observe(el);
+  });
+}
+
+init();
+</script>
+
+</body>
+</html>
